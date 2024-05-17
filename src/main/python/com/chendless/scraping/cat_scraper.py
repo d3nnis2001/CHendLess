@@ -4,21 +4,38 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from mongosave import store_page
 import time
+from random_user_agent.user_agent import UserAgent
+from random_user_agent.params import SoftwareName, OperatingSystem
 
-sleep = 1
+sleep = 2
 
-my_user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36"
+def get_agent():
+    # you can also import SoftwareEngine, HardwareType, SoftwareType, Popularity from random_user_agent.params
+    # you can also set number of user agents required by providing `limit` as parameter
+
+    software_names = [SoftwareName.CHROME.value]
+    operating_systems = [OperatingSystem.WINDOWS.value, OperatingSystem.LINUX.value]   
+
+    user_agent_rotator = UserAgent(software_names=software_names, operating_systems=operating_systems, limit=100)
+
+    # Get Random User Agent String.
+    user_agent = user_agent_rotator.get_random_user_agent()
+    return user_agent
 
 def init_driver(headless: bool):
     options = webdriver.FirefoxOptions()
     if headless: options.add_argument("--headless")
-    options.add_argument(f"--user-agent={my_user_agent}")
+    options.add_argument(f"--user-agent={get_agent()}")
     driver = webdriver.Firefox(options=options)
-    driver.set_window_size(4096, 3072) # Use increased window size to save more products
+    # driver.set_window_size(4096, 3072) # Use increased window size to save more products
+    driver.set_window_size(2560, 1440)
     return driver
 
 def navigate_to_category(driver, url):
     driver.get(url)
+    if len(driver.find_elements(By.XPATH, '//*[@id="baxia-punish"]')) == 1:
+        print("FAILED loading page: Returning!")
+        return None
     time.sleep(sleep)
     print("ENTERED page!")
 
@@ -100,7 +117,8 @@ def main():
         page_num = 1
         while True:
             url = final_url + str(page_num)
-            navigate_to_category(driver, url)
+            hasEntered = navigate_to_category(driver, url)
+            if not hasEntered: return
             print("Current page: ", url)
             scroll_to_bottom(driver)
             category = extract_category(driver=driver, xpath=xpath_category)
@@ -111,7 +129,7 @@ def main():
                 break
             for i, div in enumerate(divs, start=1):
                 entries.append(handle_card(card = div, relative_xpath_sold = relative_xpath_sold, relative_xpath_name = relative_xpath_name, relative_xpath_price = relative_xpath_price, relative_xpath_image = relative_xpath_image, relative_xpath_productlink = relative_xpath_productlink))
-                print(f'Div {i}: ', entries[i-1])
+                # print(f'Div {i}: ', entries[i-1])
             store_page(entries=entries, category_name=category)
             page_num += 1
     finally:
