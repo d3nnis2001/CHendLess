@@ -3,21 +3,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from mongosave import store_page
+from utils import get_agent, check_window_size
 import time
-from random_user_agent.user_agent import UserAgent
-from random_user_agent.params import SoftwareName, OperatingSystem
 
 sleep = 2
-
-def get_agent():
-    software_names = [SoftwareName.CHROME.value]
-    operating_systems = [OperatingSystem.WINDOWS.value, OperatingSystem.LINUX.value]   
-
-    user_agent_rotator = UserAgent(software_names=software_names, operating_systems=operating_systems, limit=100)
-
-    # Get Random User Agent String.
-    user_agent = user_agent_rotator.get_random_user_agent()
-    return user_agent
 
 def init_driver(headless: bool):
     options = webdriver.FirefoxOptions()
@@ -110,6 +99,7 @@ def main():
     print("INIT")
 
     driver = init_driver(True)
+    check_window_size()
 
     try:
         page_num = 1
