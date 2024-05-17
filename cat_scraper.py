@@ -126,7 +126,7 @@ def main():
         images = download_all_images(driver, xpath_image, download_folder)
 
         if not (len(images) == len(sold) == len(name) == len(price)):
-            print("Size of stored data is NOT equal!")
+            print("!! Size of stored data is NOT equal !!\nCheck if the window size is correct!")
     finally:
         driver.quit()
 
