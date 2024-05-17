@@ -1,3 +1,8 @@
-/Users/dennisschielke/Desktop/Uni/6thSemester/GPSE/Spring_Tutorial/spring_tut/src/main/java/com/gpse/chendless/ExampleApplication.java
-/Users/dennisschielke/Desktop/Uni/6thSemester/GPSE/Spring_Tutorial/spring_tut/src/main/java/com/gpse/chendless/InitializeDatabase.java
-/Users/dennisschielke/Desktop/Uni/6thSemester/GPSE/Spring_Tutorial/spring_tut/src/main/java/com/gpse/chendless/WebConfiguration.java
+/Users/dennisschielke/Desktop/Uni/6thSemester/Gründungsmangement/CHendLess/src/main/java/com/chendless/ExampleApplication.java
+/Users/dennisschielke/Desktop/Uni/6thSemester/Gründungsmangement/CHendLess/src/main/java/com/chendless/InitializeDatabase.java
+/Users/dennisschielke/Desktop/Uni/6thSemester/Gründungsmangement/CHendLess/src/main/java/com/chendless/WebConfiguration.java
+/Users/dennisschielke/Desktop/Uni/6thSemester/Gründungsmangement/CHendLess/src/main/java/com/chendless/controller/DataController.java
+/Users/dennisschielke/Desktop/Uni/6thSemester/Gründungsmangement/CHendLess/src/main/java/com/chendless/domain/DataModel.java
+/Users/dennisschielke/Desktop/Uni/6thSemester/Gründungsmangement/CHendLess/src/main/java/com/chendless/repositories/DataRepository.java
+/Users/dennisschielke/Desktop/Uni/6thSemester/Gründungsmangement/CHendLess/src/main/java/com/chendless/service/DataService.java
+/Users/dennisschielke/Desktop/Uni/6thSemester/Gründungsmangement/CHendLess/src/main/java/com/chendless/service/DataServiceImpl.java

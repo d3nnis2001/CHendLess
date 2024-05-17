@@ -11,7 +11,7 @@
 	</parent>
 
 	<groupId>gpse</groupId>
-	<artifactId>spring-tutorial</artifactId>
+	<artifactId>CHendLess</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Spring-Tutorial</name>
 	<description>Spring tutorial project gpse 24</description>
@@ -26,10 +26,6 @@
 
 		<!-- Maven Build Helper version -->
 		<buildHelper.version>3.5.0</buildHelper.version>
-
-		<!-- Checkstyle versions -->
-		<checkstylePlugin.version>3.3.1</checkstylePlugin.version>
-		<checkstyle.version>8.38</checkstyle.version>
 
 		<!-- Spotbugs versions -->
 		<spotbugsPlugin.version>4.8.3.1</spotbugsPlugin.version>
@@ -229,70 +225,6 @@
 				<artifactId>maven-failsafe-plugin</artifactId>
 			</plugin>
 
-			<!-- Generate checkstyle warnings and report in validation phase -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>${checkstylePlugin.version}</version>
-				<dependencies>
-					<dependency>
-						<groupId>com.puppycrawl.tools</groupId>
-						<artifactId>checkstyle</artifactId>
-						<version>${checkstyle.version}</version>
-					</dependency>
-				</dependencies>
-				<configuration>
-					<configLocation>
-						${project.basedir}/codecheck/checkstyle.xml
-					</configLocation>
-					<propertyExpansion>config_loc=${project.basedir}${file.separator}codecheck
-					</propertyExpansion>
-					<outputFile>
-						${project.build.directory}/checkstyle/checkstyle-result.xml
-					</outputFile>
-					<includeTestSourceDirectory>false</includeTestSourceDirectory>
-					<consoleOutput>true</consoleOutput>
-					<violationSeverity>error</violationSeverity>
-					<failOnViolation>true</failOnViolation>
-				</configuration>
-				<executions>
-					<execution>
-						<id>checkstyle-validate</id>
-						<phase>validate</phase>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-			<!-- Generate Spotbugs warnings and report in validation phase -->
-			<plugin>
-				<groupId>com.github.spotbugs</groupId>
-				<artifactId>spotbugs-maven-plugin</artifactId>
-				<version>${spotbugsPlugin.version}</version>
-				<dependencies>
-					<dependency>
-						<groupId>com.github.spotbugs</groupId>
-						<artifactId>spotbugs</artifactId>
-						<version>${spotbugs.version}</version>
-					</dependency>
-
-				</dependencies>
-				<executions>
-					<execution>
-						<id>spotbugs-check</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<excludeFilterFile>codecheck/spotbugs-filter.xml</excludeFilterFile>
-					<failOnError>false</failOnError>
-				</configuration>
-			</plugin>
 
 			<!-- Generate jacoco code coverage report in test phase-->
 			<plugin>
