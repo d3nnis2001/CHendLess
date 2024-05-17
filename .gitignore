@@ -1,6 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 /files
+/src/main/python/com/chendless/scraping/__pycache__
 
 # dependencies
 /node_modules
