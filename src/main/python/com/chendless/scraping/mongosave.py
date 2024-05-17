@@ -4,7 +4,7 @@ from bson.binary import Binary
 from PIL import Image
 from io import BytesIO
 
-keys = ['Name', 'Price', 'Amount sold', 'Image']
+keys = ['Name', 'Price', 'Amount sold', 'Image', 'Product Link']
 
 def resize_and_save_image(image_url):
     response = requests.get(image_url)

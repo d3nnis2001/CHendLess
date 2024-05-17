@@ -5,6 +5,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from mongosave import store_page
 import time
 
+sleep = 1
+
 my_user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36"
 
 def init_driver(headless: bool):
@@ -17,7 +19,7 @@ def init_driver(headless: bool):
 
 def navigate_to_category(driver, url):
     driver.get(url)
-    time.sleep(2)
+    time.sleep(sleep)
     print("ENTERED page!")
 
 # This is still necessary, do not remove
@@ -26,7 +28,7 @@ def scroll_to_bottom(driver):
 
     while True:
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        time.sleep(4)
+        time.sleep(sleep)
         new_height = driver.execute_script("return document.body.scrollHeight")
         if new_height == last_height:
             break
@@ -34,14 +36,18 @@ def scroll_to_bottom(driver):
 
 def append_if_exist(arr, entry, attr):
     if arr:
+        if attr == 'href':
+            entry.append(arr[0].get_attribute('href'))
+            return
         entry.append(getattr(arr[0], attr))
     else:
         entry.append(None)
 
-def handle_card(card, relative_xpath_sold, relative_xpath_name, relative_xpath_price, relative_xpath_image):
+def handle_card(card, relative_xpath_sold, relative_xpath_name, relative_xpath_price, relative_xpath_image, relative_xpath_productlink):
     entry = []
     sold = card.find_elements(By.XPATH, relative_xpath_sold)
     name = card.find_elements(By.XPATH, relative_xpath_name)
+    link = card.find_elements(By.XPATH, relative_xpath_productlink)
     price = handle_price(card, relative_xpath_price)
     image = None
     try:
@@ -55,6 +61,7 @@ def handle_card(card, relative_xpath_sold, relative_xpath_name, relative_xpath_p
     entry.append(price)
     append_if_exist(sold, entry, 'text')
     entry.append(image)
+    append_if_exist(link, entry, 'href')
     return entry
 
 def handle_price(card, relative_xpath_price):
@@ -83,6 +90,7 @@ def main():
     relative_xpath_name = './div/div/a/div[2]/div[1]'
     relative_xpath_image = './div/div/a/div[1]/img'
     relative_xpath_price = './div/div/a/div[2]/div[3]/div[1]/span'
+    relative_xpath_productlink = './div/div/a'
     xpath_category = '//*[@id="search-words"]'
     print("INIT")
 
@@ -102,7 +110,7 @@ def main():
                 print("No elements found, last page")
                 break
             for i, div in enumerate(divs, start=1):
-                entries.append(handle_card(card = div, relative_xpath_sold = relative_xpath_sold, relative_xpath_name = relative_xpath_name, relative_xpath_price = relative_xpath_price, relative_xpath_image = relative_xpath_image))
+                entries.append(handle_card(card = div, relative_xpath_sold = relative_xpath_sold, relative_xpath_name = relative_xpath_name, relative_xpath_price = relative_xpath_price, relative_xpath_image = relative_xpath_image, relative_xpath_productlink = relative_xpath_productlink))
                 print(f'Div {i}: ', entries[i-1])
             store_page(entries=entries, category_name=category)
             page_num += 1
