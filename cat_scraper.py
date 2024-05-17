@@ -99,6 +99,8 @@ def download_all_images(driver: webdriver, xpath: str, download_folder: str):
         save_path = os.path.join(download_folder, f'image_{idx + 1}.jpg')
         download_image(image_url, save_path)
 
+    return image_urls
+
 def main():
     url = 'https://de.aliexpress.com/w/wholesale-Flache-sandalen.html?spm=a2g0o.categorymp.0.0.1912FyQxFyQxUQ&categoryUrlParams=%7B%22q%22%3A%22Flache%20sandalen%22%2C%22s%22%3A%22qp_nw%22%2C%22osf%22%3A%22category_navigate%22%2C%22sg_search_params%22%3A%22%22%2C%22guide_trace%22%3A%22a419bdaa-f1f0-43d9-849b-f06f05004ce9%22%2C%22scene_id%22%3A%2237749%22%2C%22searchBizScene%22%3A%22openSearch%22%2C%22recog_lang%22%3A%22de%22%2C%22bizScene%22%3A%22category_navigate%22%2C%22guideModule%22%3A%22category_navigate_vertical%22%2C%22postCatIds%22%3A%22322%2C201768104%22%2C%22scene%22%3A%22category_navigate%22%7D&isFromCategory=y'
     classname_sold = 'multi--trade--Ktbl2jB'
@@ -121,7 +123,10 @@ def main():
         print("Extrahierte Namen:", name)
         print("Extrahierte Preise: ", price)
         # Es fehlt immer das letzte Bild. Scroll issue?
-        download_all_images(driver, xpath_image, download_folder)
+        images = download_all_images(driver, xpath_image, download_folder)
+
+        if not (len(images) == len(sold) == len(name) == len(price)):
+            print("Size of stored data is NOT equal!")
     finally:
         driver.quit()
 
