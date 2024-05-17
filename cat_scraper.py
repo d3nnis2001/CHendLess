@@ -127,6 +127,9 @@ def main():
 
         if not (len(images) == len(sold) == len(name) == len(price)):
             print("!! Size of stored data is NOT equal !!\nCheck if the window size is correct!")
+            return
+        
+        
     finally:
         driver.quit()
 
