@@ -4,6 +4,8 @@ from bson.binary import Binary
 from PIL import Image
 from io import BytesIO
 
+keys = ['Name', 'Price', 'Amount sold', 'Image']
+
 def resize_and_save_image(image_url):
     response = requests.get(image_url)
     image = Image.open(BytesIO(response.content))
@@ -16,17 +18,17 @@ def resize_and_save_image(image_url):
     return image_data
 
 # The function assumes that the arrays have the same length. Please run this ONLY once this has been ensured
-def store_page(sold, name, price, image_urls):
+def store_page(entries, category_name):
     client = MongoClient('mongodb://localhost:27017/')
     db = client['AliExpress']
-    collection = db['Test']
+    collection = db[category_name]
 
-    for i in range(len(sold)):
-
-        document = {
-            'Name': name[i],
-            'Price': price[i],
-            'Amount sold': sold[i],
-            'Image': resize_and_save_image(image_urls[i])
-        }
+    for entry in entries:
+        document = {}
+        for i in range(len(entry)):
+            if keys[i] == 'Image':
+                # Resize and save the image, then store the new image path in the document
+                document[keys[i]] = resize_and_save_image(entry[i])
+            else:
+                document[keys[i]] = entry[i]
         collection.insert_one(document)
