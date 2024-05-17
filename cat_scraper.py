@@ -11,6 +11,7 @@ def init_driver(headless: bool):
     options = webdriver.FirefoxOptions()
     if headless: options.add_argument("--headless")
     driver = webdriver.Firefox(options=options)
+    driver.set_window_size(4096, 3072) # Use increased window size to save more products
     return driver
 
 def navigate_to_category(driver, url):
@@ -29,23 +30,40 @@ def scroll_to_bottom(driver):
             break
         last_height = new_height
 
-
-def extract_information(driver, classname, prefix, download_folder):
-    elements = driver.find_elements(By.CLASS_NAME, classname)
-    info = [element.text for element in elements]
-    info_string = '\n'.join(info)
-
+def save_info(info_string, prefix, download_folder):
     if not os.path.exists(download_folder):
         os.makedirs(download_folder)
 
     txt_file_path = os.path.join(download_folder, prefix + '.txt')
 
-    with open(txt_file_path, 'a', encoding='utf-8') as file:
+    with open(txt_file_path, 'w', encoding='utf-8') as file:
         file.write(info_string)
 
     print(f"Daten abgespeichert in: {txt_file_path}")
 
+
+
+def extract_information(driver: webdriver, classname: str, prefix: str, download_folder: str):
+    elements = driver.find_elements(By.CLASS_NAME, classname)
+    info = [element.text for element in elements]
+    info_string = '\n'.join(info)
+    save_info(info_string, prefix, download_folder)
     return info
+
+
+
+# Use a specific function to add spans together
+def extract_price(driver: webdriver, xpath_price: str, prefix: str, download_folder: str):
+    elements = driver.find_elements(By.XPATH, xpath_price)
+    prices = []
+    for element in elements:
+        spans = element.find_elements(By.XPATH, './span')
+        price = ''.join([span.text for span in spans])
+        prices.append(price)
+    
+    price_string = '\n'.join(prices)
+    save_info(price_string, prefix, download_folder)
+    return prices
 
 # Use an XPath instead of classname, faster and more reliable
 def extract_image_urls(driver, xpath):
@@ -87,7 +105,8 @@ def main():
     classname_name = 'multi--titleText--nXeOvyr'
     # classname_image = 'multi--img--1IH3lZb product-img'
     xpath_image = '//*[@id="card-list"]//div/a/div[1]/img'
-    download_folder = "C:\\Users\\Kenny\\Documents\\GitHub\\CHendLess-main\\files"
+    xpath_price = '//*[@id="card-list"]/div/div/div/a/div[2]/div[3]/div[1]'
+    download_folder = "C:\\Users\\Kenny\\Documents\\GitHub\\CHendLess\\files"
     # download_folder = "/Users/dennisschielke/Desktop/Uni/6thSemester/Gründungsmangement/images"
     print("INIT")
 
@@ -97,8 +116,10 @@ def main():
         scroll_to_bottom(driver)
         sold = extract_information(driver, classname_sold, "Verkauft", download_folder)
         name = extract_information(driver, classname_name, "Name", download_folder)
+        price = extract_price(driver, xpath_price, "Preis", download_folder)
         print("Extrahierte Verkäufe:", sold)
         print("Extrahierte Namen:", name)
+        print("Extrahierte Preise: ", price)
         # Es fehlt immer das letzte Bild. Scroll issue?
         download_all_images(driver, xpath_image, download_folder)
     finally:
