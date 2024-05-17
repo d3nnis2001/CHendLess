@@ -49,9 +49,11 @@ def handle_card(card, relative_xpath_sold, relative_xpath_name, relative_xpath_p
         image = handle_image(card, relative_xpath_image)
     except Exception as e:
         print(f"Fehler beim Extrahieren der Bild-URLs: {type(e).__name__}, {e}")
-    append_if_exist(sold, entry, 'text')
+    
+    # Save in the order that it's saved in the DB
     append_if_exist(name, entry, 'text')
     entry.append(price)
+    append_if_exist(sold, entry, 'text')
     entry.append(image)
     return entry
 
@@ -75,7 +77,7 @@ def extract_category(driver: webdriver, xpath: str):
     return elements[0].get_attribute('value')
 
 def main():
-    url = 'https://de.aliexpress.com/w/wholesale-Fensterfolien-und-Sonnenschutz.html?spm=a2g0o.home.allcategoriespc.31.44e312e2NkNsid&categoryUrlParams=%7B"q"%3A"Fensterfolien%20und%20Sonnenschutz"%2C"s"%3A"qp_nw"%2C"osf"%3A"categoryNagivateOld"%2C"sg_search_params"%3A""%2C"guide_trace"%3A"e39589b9-3b85-4535-8cf6-fe88d3deb2d0"%2C"scene_id"%3A"30630"%2C"searchBizScene"%3A"openSearch"%2C"recog_lang"%3A"de"%2C"bizScene"%3A"categoryNagivateOld"%2C"guideModule"%3A"unknown"%2C"postCatIds"%3A"34%2C201355758"%2C"scene"%3A"category_navigate"%7D&isFromCategory=y'
+    url = 'https://de.aliexpress.com/w/wholesale-Kinder%2525252dSonnenhüte.html?spm=a2g0o.home.allcategoriespc.157.44e312e2NkNsid&categoryUrlParams=%7B"q"%3A"Kinder-Sonnenhüte"%2C"s"%3A"qp_nw"%2C"osf"%3A"categoryNagivateOld"%2C"sg_search_params"%3A""%2C"guide_trace"%3A"400a295b-ed71-486b-8d44-7925cc60b448"%2C"scene_id"%3A"30630"%2C"searchBizScene"%3A"openSearch"%2C"recog_lang"%3A"de"%2C"bizScene"%3A"categoryNagivateOld"%2C"guideModule"%3A"unknown"%2C"postCatIds"%3A"200000297%2C36%2C1501%2C18%2C200003922"%2C"scene"%3A"category_navigate"%7D&isFromCategory=y'
     xpath_cardlistdivs = '//*[@id="card-list"]/div'
     relative_xpath_sold = './div/div/a/div[2]/div[2]/span'
     relative_xpath_name = './div/div/a/div[2]/div[1]'
