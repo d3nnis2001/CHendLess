@@ -10,9 +10,6 @@ from random_user_agent.params import SoftwareName, OperatingSystem
 sleep = 2
 
 def get_agent():
-    # you can also import SoftwareEngine, HardwareType, SoftwareType, Popularity from random_user_agent.params
-    # you can also set number of user agents required by providing `limit` as parameter
-
     software_names = [SoftwareName.CHROME.value]
     operating_systems = [OperatingSystem.WINDOWS.value, OperatingSystem.LINUX.value]   
 
@@ -33,11 +30,13 @@ def init_driver(headless: bool):
 
 def navigate_to_category(driver, url):
     driver.get(url)
+    # Check for captcha, return if so. ADD captcha solver
     if len(driver.find_elements(By.XPATH, '//*[@id="baxia-punish"]')) == 1:
         print("FAILED loading page: Returning!")
-        return None
+        return False
     time.sleep(sleep)
     print("ENTERED page!")
+    return True
 
 # This is still necessary, do not remove
 def scroll_to_bottom(driver):
