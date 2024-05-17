@@ -21,6 +21,11 @@ def resize_and_save_image(image_url):
 def store_page(entries, category_name):
     client = MongoClient('mongodb://localhost:27017/')
     db = client['AliExpress']
+    # for collection in db.list_collection_names():
+        # if collection == category_name:
+            # IMPLEMENT just skip instead of returning...
+            # print("Collection already exists! Returning...")
+            # return
     collection = db[category_name]
 
     for entry in entries:
@@ -32,3 +37,5 @@ def store_page(entries, category_name):
             else:
                 document[keys[i]] = entry[i]
         collection.insert_one(document)
+
+    print("DONE saving to Database!")

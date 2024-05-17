@@ -2,15 +2,15 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from urllib.request import Request, urlopen
-from PIL import Image
 from mongosave import store_page
-import os
 import time
+
+my_user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36"
 
 def init_driver(headless: bool):
     options = webdriver.FirefoxOptions()
     if headless: options.add_argument("--headless")
+    options.add_argument(f"--user-agent={my_user_agent}")
     driver = webdriver.Firefox(options=options)
     driver.set_window_size(4096, 3072) # Use increased window size to save more products
     return driver
@@ -77,7 +77,7 @@ def extract_category(driver: webdriver, xpath: str):
     return elements[0].get_attribute('value')
 
 def main():
-    url = 'https://de.aliexpress.com/w/wholesale-Kinder%2525252dSonnenhüte.html?spm=a2g0o.home.allcategoriespc.157.44e312e2NkNsid&categoryUrlParams=%7B"q"%3A"Kinder-Sonnenhüte"%2C"s"%3A"qp_nw"%2C"osf"%3A"categoryNagivateOld"%2C"sg_search_params"%3A""%2C"guide_trace"%3A"400a295b-ed71-486b-8d44-7925cc60b448"%2C"scene_id"%3A"30630"%2C"searchBizScene"%3A"openSearch"%2C"recog_lang"%3A"de"%2C"bizScene"%3A"categoryNagivateOld"%2C"guideModule"%3A"unknown"%2C"postCatIds"%3A"200000297%2C36%2C1501%2C18%2C200003922"%2C"scene"%3A"category_navigate"%7D&isFromCategory=y'
+    final_url = 'https://de.aliexpress.com/w/wholesale-Papierhalter.html?spm=a2g0o.productlist.allcategoriespc.38.564a5e86SLYPp7&categoryUrlParams=%7B"q"%3A"Papierhalter"%2C"s"%3A"qp_nw"%2C"osf"%3A"categoryNagivateOld"%2C"sg_search_params"%3A""%2C"guide_trace"%3A"bd7b74a0-5857-48c9-8a9d-6700c9590969"%2C"scene_id"%3A"30630"%2C"searchBizScene"%3A"openSearch"%2C"recog_lang"%3A"de"%2C"bizScene"%3A"categoryNagivateOld"%2C"guideModule"%3A"unknown"%2C"postCatIds"%3A"15%2C13"%2C"scene"%3A"category_navigate"%7D&isFromCategory=y&page='
     xpath_cardlistdivs = '//*[@id="card-list"]/div'
     relative_xpath_sold = './div/div/a/div[2]/div[2]/span'
     relative_xpath_name = './div/div/a/div[2]/div[1]'
@@ -89,15 +89,23 @@ def main():
     driver = init_driver(True)
 
     try:
-        navigate_to_category(driver, url)
-        scroll_to_bottom(driver)
-        category = extract_category(driver=driver, xpath=xpath_category)
-        entries = []
-        divs = driver.find_elements(By.XPATH, xpath_cardlistdivs)
-        for i, div in enumerate(divs, start=1):
-            entries.append(handle_card(card = div, relative_xpath_sold = relative_xpath_sold, relative_xpath_name = relative_xpath_name, relative_xpath_price = relative_xpath_price, relative_xpath_image = relative_xpath_image))
-            print(f'Div {i}: ', entries[i-1])
-        store_page(entries=entries, category_name=category)
+        page_num = 1
+        while True:
+            url = final_url + str(page_num)
+            navigate_to_category(driver, url)
+            print("Current page: ", url)
+            scroll_to_bottom(driver)
+            category = extract_category(driver=driver, xpath=xpath_category)
+            entries = []
+            divs = driver.find_elements(By.XPATH, xpath_cardlistdivs)
+            if len(divs) == 0:
+                print("No elements found, last page")
+                break
+            for i, div in enumerate(divs, start=1):
+                entries.append(handle_card(card = div, relative_xpath_sold = relative_xpath_sold, relative_xpath_name = relative_xpath_name, relative_xpath_price = relative_xpath_price, relative_xpath_image = relative_xpath_image))
+                print(f'Div {i}: ', entries[i-1])
+            store_page(entries=entries, category_name=category)
+            page_num += 1
     finally:
         driver.quit()
 
