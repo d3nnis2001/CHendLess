@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="8.38">
+<file name="/Users/dennisschielke/Desktop/Uni/6thSemester/GPSE/Spring_Tutorial/spring_tut/src/main/java/com/gpse/chendless/ExampleApplication.java">
+<error line="7" column="1" severity="info" message="Es fehlt ein Javadoc-Kommentar." source="com.puppycrawl.tools.checkstyle.checks.javadoc.MissingJavadocTypeCheck"/>
+<error line="7" column="1" severity="warning" message="Hilfsklassen sollten keinen Standard-Konstruktur und keinen als public deklarierten Konstruktor haben." source="com.puppycrawl.tools.checkstyle.checks.design.HideUtilityClassConstructorCheck"/>
+</file>
+<file name="/Users/dennisschielke/Desktop/Uni/6thSemester/GPSE/Spring_Tutorial/spring_tut/src/main/java/com/gpse/chendless/InitializeDatabase.java">
+<error line="6" column="1" severity="info" message="Es fehlt ein Javadoc-Kommentar." source="com.puppycrawl.tools.checkstyle.checks.javadoc.MissingJavadocTypeCheck"/>
+<error line="9" severity="info" message="Javadoc enthält einen leeren Beschreibungsabschnitt." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocStyleCheck"/>
+</file>
+<file name="/Users/dennisschielke/Desktop/Uni/6thSemester/GPSE/Spring_Tutorial/spring_tut/src/main/java/com/gpse/chendless/WebConfiguration.java">
+<error line="24" severity="info" message="@return-Tag sollte vorhanden sein und eine Beschreibung haben." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
+</file>
+</checkstyle>
