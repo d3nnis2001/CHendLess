@@ -24,8 +24,7 @@ def init_driver(headless: bool):
     if headless: options.add_argument("--headless")
     options.add_argument(f"--user-agent={get_agent()}")
     driver = webdriver.Firefox(options=options)
-    # driver.set_window_size(4096, 3072) # Use increased window size to save more products
-    driver.set_window_size(2560, 1440)
+    driver.set_window_size(4096, 3072) # Use increased window size to save more products
     return driver
 
 def navigate_to_category(driver, url):
