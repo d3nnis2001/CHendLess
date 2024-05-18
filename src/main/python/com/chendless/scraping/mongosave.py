@@ -1,5 +1,5 @@
 import requests
-from pymongo import MongoClient
+from pymongo import MongoClient, errors
 from bson.binary import Binary
 from PIL import Image
 from io import BytesIO
@@ -22,6 +22,7 @@ def store_page(entries, category_name):
     client = MongoClient('mongodb://localhost:27017/')
     db = client['AliExpress']
     collection = db[category_name]
+    collection.create_index('Product Link', unique=True) # Create unique index on 'Product Link'
 
     documents = []
     for entry in entries:
@@ -34,6 +35,13 @@ def store_page(entries, category_name):
                 document[keys[i]] = entry[i]
         documents.append(document)
 
-    collection.insert_many(documents)
+    # Insert into DB; catch any duplicates
+    try:
+        collection.insert_many(documents, ordered=False)
+    except errors.BulkWriteError as e:
+        write_errors = e.details['writeErrors']
+        for error in write_errors:
+            if error['code'] == 11000:  # Duplicate key error code
+                print(f"ERROR: Duplicate entry found for Product Link: {error['op']['Product Link']}")
 
     print("DONE saving to Database!")
