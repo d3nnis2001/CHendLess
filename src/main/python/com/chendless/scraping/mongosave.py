@@ -42,6 +42,6 @@ def store_page(entries, category_name):
         write_errors = e.details['writeErrors']
         for error in write_errors:
             if error['code'] == 11000:  # Duplicate key error code
-                print(f"ERROR: Duplicate entry found for Product Link: {error['op']['Product Link']}")
+                print(f"INFO: Duplicate entry found in category \"{category_name}\" for Product Link: {error['op']['Product Link']}")
 
     print("DONE saving to Database!")
