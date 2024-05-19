@@ -20,8 +20,16 @@ def navigate_to_category(driver, url):
     driver.get(url)
     # Check for captcha, return if so. ADD captcha solver
     if len(driver.find_elements(By.XPATH, '//*[@id="baxia-punish"]')) == 1:
-        print("FAILED loading page: Returning!")
+        print("ERROR: Loading page stopped by captcha: Returning!")
         return False
+    
+    # The possibility exists that a +18 accept button appears, this will click it.
+    if len(driver.find_elements(By.XPATH, '/html/body/div[7]/div[2]/div/div[2]')) == 1:
+        print("ERROR: Loading page stopped by 18+ confirmation... Attempting to click!") 
+        driver.find_element(By.XPATH, '/html/body/div[7]/div[2]/div/div[2]/div/div[2]/div').click()
+        time.sleep(1)
+        print("CLICKED the link! Continue...now!")
+
     time.sleep(sleep)
     print("ENTERED page!")
     return True
@@ -88,7 +96,8 @@ def extract_category(driver: webdriver, xpath: str):
     return elements[0].get_attribute('value')
 
 def main():
-    final_url = 'https://de.aliexpress.com/w/wholesale-Papierhalter.html?spm=a2g0o.productlist.allcategoriespc.38.564a5e86SLYPp7&categoryUrlParams=%7B"q"%3A"Papierhalter"%2C"s"%3A"qp_nw"%2C"osf"%3A"categoryNagivateOld"%2C"sg_search_params"%3A""%2C"guide_trace"%3A"bd7b74a0-5857-48c9-8a9d-6700c9590969"%2C"scene_id"%3A"30630"%2C"searchBizScene"%3A"openSearch"%2C"recog_lang"%3A"de"%2C"bizScene"%3A"categoryNagivateOld"%2C"guideModule"%3A"unknown"%2C"postCatIds"%3A"15%2C13"%2C"scene"%3A"category_navigate"%7D&isFromCategory=y&page='
+    # final_url = 'https://de.aliexpress.com/w/wholesale-Papierhalter.html?spm=a2g0o.productlist.allcategoriespc.38.564a5e86SLYPp7&categoryUrlParams=%7B"q"%3A"Papierhalter"%2C"s"%3A"qp_nw"%2C"osf"%3A"categoryNagivateOld"%2C"sg_search_params"%3A""%2C"guide_trace"%3A"bd7b74a0-5857-48c9-8a9d-6700c9590969"%2C"scene_id"%3A"30630"%2C"searchBizScene"%3A"openSearch"%2C"recog_lang"%3A"de"%2C"bizScene"%3A"categoryNagivateOld"%2C"guideModule"%3A"unknown"%2C"postCatIds"%3A"15%2C13"%2C"scene"%3A"category_navigate"%7D&isFromCategory=y&page='
+    final_url = 'https://de.aliexpress.com/w/wholesale-Test.html?spm=a2g0o.productlist.search.0'
     xpath_cardlistdivs = '//*[@id="card-list"]/div'
     relative_xpath_sold = './div/div/a/div[2]/div[2]/span'
     relative_xpath_name = './div/div/a/div[2]/div[1]'
@@ -99,7 +108,7 @@ def main():
     print("INIT")
 
     driver = init_driver(True)
-    check_window_size()
+    check_window_size(driver=driver)
 
     try:
         page_num = 1
