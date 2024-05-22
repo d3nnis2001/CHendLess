@@ -1,5 +1,5 @@
-import Start from "@/pages/Start.vue";
-import Main from "@/pages/Main.Vue";
+import Start from "../pages/Start.vue";
+import Main from "../pages/Main.vue";
 import {createRouter, createWebHistory} from "vue-router";
 
 const router = createRouter({
