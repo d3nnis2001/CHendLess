@@ -33,15 +33,7 @@ def store_page(entries, category_name):
             else:
                 document[keys[i]] = entry[i]
         documents.append(document)
-
-    # Insert into DB; catch any duplicates
-    #try:
     collection.insert_many(documents, ordered=False)
-    #except errors.BulkWriteError as e:
-        #write_errors = e.details['writeErrors']
-        #for error in write_errors:
-            #if error['code'] == 11000:  # Duplicate key error code
-                #print(f"INFO: Duplicate entry found in category \"{category_name}\" for Product Link: {error['op']['Product Link']}")
 
     print("DONE saving to Database!")
 
@@ -52,12 +44,14 @@ def check_duplicates(category_name):
 
     # Aggregate to find duplicates in 'Product Link'
     pipeline = [
-        {"$group": {"_id": "$Product Link", "count": {"$sum": 1}}},
+        {"$group": {"_id": "$Product Link", "dups": {"$push": "$_id"}, "count": {"$sum": 1}}},
         {"$match": {"count": {"$gt": 1}}}
     ]
-
+    
     duplicates = collection.aggregate(pipeline)
 
-    # Print duplicates
+    # Print and remove duplicates
     for duplicate in duplicates:
-        print(duplicate)
+        # Skip the first item from the dups list
+        for id in duplicate['dups'][1:]:
+            collection.delete_one({'_id': id})

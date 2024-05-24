@@ -14,6 +14,19 @@ def get_agent():
 
 def check_window_size(driver: webdriver):
     size = driver.get_window_size()
-    print('Selenium webdriver size is: ', size)
+    print('INFO: Selenium webdriver size is: ', size)
     if size['width'] != 4096 and size['height'] != 3072:
-        print('Selenium webdriver size is NOT 4k! This will result in an image timeout!')
+        print('WARNIGNG: Selenium webdriver size is NOT 4k! This will result in an image timeout!')
+
+def trim_link(url: str):
+    # Split the URL by '/'
+    parts = url.split('/')
+    # The ID is the part after 'item'
+    if 'item' in parts:
+        # Get the part after 'item'
+        item_part = parts[parts.index('item') + 1]
+        # Split by '.html' and get the first part, which is the ID
+        id = item_part.split('.html')[0]
+        return int(id)
+    else:
+        return None

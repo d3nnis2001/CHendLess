@@ -2,8 +2,9 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException
 from mongosave import store_page, check_duplicates
-from utils import get_agent, check_window_size
+from utils import get_agent, check_window_size, trim_link
 import time
 
 sleep = 2
@@ -46,21 +47,17 @@ def scroll_to_bottom(driver):
             break
         last_height = new_height
 
-def append_if_exist(arr, entry, attr):
-    if arr:
-        if attr == 'href':
-            entry.append(arr[0].get_attribute('href'))
-            return
-        entry.append(getattr(arr[0], attr))
-    else:
-        entry.append(None)
-
-def handle_card(card, relative_xpath_sold, relative_xpath_name, relative_xpath_price, relative_xpath_image, relative_xpath_productlink):
+def handle_card(card, relative_xpath_sold, relative_xpath_name, relative_xpath_price, relative_xpath_price_no_sold, relative_xpath_image, relative_xpath_productlink):
     entry = []
-    sold = card.find_elements(By.XPATH, relative_xpath_sold)
-    name = card.find_elements(By.XPATH, relative_xpath_name)
-    link = card.find_elements(By.XPATH, relative_xpath_productlink)
-    price = handle_price(card, relative_xpath_price)
+    try:
+        sold = card.find_element(By.XPATH, relative_xpath_sold).get_attribute('innerHTML')
+    except NoSuchElementException as e:
+        sold = None
+
+    name = card.find_element(By.XPATH, relative_xpath_name).get_attribute('innerText')
+    link = card.find_element(By.XPATH, relative_xpath_productlink).get_attribute('href')
+    price = handle_price(card, relative_xpath_price) if sold else handle_price(card, relative_xpath_price_no_sold)
+
     image = None
     try:
         WebDriverWait(card, 10).until(EC.presence_of_all_elements_located((By.XPATH, relative_xpath_image)))
@@ -69,11 +66,11 @@ def handle_card(card, relative_xpath_sold, relative_xpath_name, relative_xpath_p
         print(f"Fehler beim Extrahieren der Bild-URLs: {type(e).__name__}, {e}")
     
     # Save in the order that it's saved in the DB
-    append_if_exist(name, entry, 'text')
+    entry.append(name)
     entry.append(price)
-    append_if_exist(sold, entry, 'text')
+    entry.append(sold)
     entry.append(image)
-    append_if_exist(link, entry, 'href')
+    entry.append(trim_link(link))
     return entry
 
 def handle_price(card, relative_xpath_price):
@@ -96,12 +93,13 @@ def extract_category(driver: webdriver, xpath: str):
     return elements[0].get_attribute('value')
 
 def main():
-    final_url = 'https://de.aliexpress.com/w/wholesale-Spielzeugpistolen.html?isFromCategory=y&categoryUrlParams=%7B"q"%3A"Spielzeugpistolen"%2C"s"%3A"qp_nw"%2C"osf"%3A"categoryNagivateOld"%2C"sg_search_params"%3A""%2C"guide_trace"%3A"41e60245-04c0-4740-9dcc-244cd7417525"%2C"scene_id"%3A"30630"%2C"searchBizScene"%3A"openSearch"%2C"recog_lang"%3A"de"%2C"bizScene"%3A"categoryNagivateOld"%2C"guideModule"%3A"unknown"%2C"postCatIds"%3A"26%2C100000310"%2C"scene"%3A"category_navigate"%7D&page=4&g=y&SearchText=Spielzeugpistolen&page='
+    final_url = 'https://de.aliexpress.com/w/wholesale-Lederhosen.html?spm=a2g0o.productlist.allcategoriespc.25.82b746c7l7KMQo&categoryUrlParams=%7B"q"%3A"Lederhosen"%2C"s"%3A"qp_nw"%2C"osf"%3A"categoryNagivateOld"%2C"sg_search_params"%3A""%2C"guide_trace"%3A"23a2b411-c9d4-4ed5-95ac-7d91c13f6a05"%2C"scene_id"%3A"30630"%2C"searchBizScene"%3A"openSearch"%2C"recog_lang"%3A"de"%2C"bizScene"%3A"categoryNagivateOld"%2C"guideModule"%3A"unknown"%2C"postCatIds"%3A"200000343%2C200001813"%2C"scene"%3A"category_navigate"%7D&isFromCategory=y&page='
     xpath_cardlistdivs = '//*[@id="card-list"]/div'
     relative_xpath_sold = './div/div/a/div[2]/div[2]/span'
     relative_xpath_name = './div/div/a/div[2]/div[1]'
     relative_xpath_image = './div/div/a/div[1]/img'
-    relative_xpath_price = './div/div/a/div[2]/div[3]/div[1]/span'
+    relative_xpath_price = './div/div/a/div[2]/div[3]/div[1]'
+    relative_xpath_price_no_sold = './div/div/a/div[2]/div[2]/div[1]'
     relative_xpath_productlink = './div/div/a'
     xpath_category = '//*[@id="search-words"]'
     print("INIT")
@@ -122,10 +120,10 @@ def main():
             entries = []
             divs = driver.find_elements(By.XPATH, xpath_cardlistdivs)
             if len(divs) == 0:
-                print("No elements found, last page")
+                print("INFO: No elements found, last page")
                 break
             for i, div in enumerate(divs, start=1):
-                entries.append(handle_card(card = div, relative_xpath_sold = relative_xpath_sold, relative_xpath_name = relative_xpath_name, relative_xpath_price = relative_xpath_price, relative_xpath_image = relative_xpath_image, relative_xpath_productlink = relative_xpath_productlink))
+                entries.append(handle_card(card = div, relative_xpath_sold = relative_xpath_sold, relative_xpath_price_no_sold = relative_xpath_price_no_sold, relative_xpath_name = relative_xpath_name, relative_xpath_price = relative_xpath_price, relative_xpath_image = relative_xpath_image, relative_xpath_productlink = relative_xpath_productlink))
                 # print(f'Div {i}: ', entries[i-1])
             store_page(entries=entries, category_name=category)
             page_num += 1
