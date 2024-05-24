@@ -1,3 +1,6 @@
+import base64
+from io import BytesIO
+
 import torch
 from torchvision import models, transforms
 from PIL import Image
@@ -19,11 +22,13 @@ preprocess = transforms.Compose([
 ])
 
 
-def load_image(image_path):
-    input_image = Image.open(image_path).convert("RGB")
+def load_image_base64(image_base64):
+    image_data = base64.b64decode(image_base64)
+    input_image = Image.open(BytesIO(image_data)).convert("RGB")
     input_tensor = preprocess(input_image)
     input_batch = input_tensor.unsqueeze(0)
     return input_batch
+
 
 
 def load_imagenet_classes():
@@ -32,8 +37,8 @@ def load_imagenet_classes():
 
 
 # Get labels with highest probabilities (greater than 0.5)
-def label_image(image_path):
-    input_batch = load_image(image_path)
+def label_image(image_64):
+    input_batch = (load_image_base64(image_64))
 
     if torch.cuda.is_available():
         input_batch = input_batch.to('cuda')

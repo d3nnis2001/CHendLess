@@ -7,6 +7,11 @@ import matplotlib.pyplot as plt
 from rembg import remove
 import cv2
 
+
+"""
+
+Not in use
+
 client = MongoClient('mongodb://localhost:27017/')
 db = client['AliExpress']
 
@@ -16,19 +21,15 @@ def getAllProducts(collection):
     documents = collection.find()
     all_documents = list(documents)
     return all_documents
+"""
 
 # Extracted Base64 to image
-def getAllImagesFromBase64(allProducts):
-    images_base64 = []
-    for product in allProducts:
-        if 'Image' in product:
-            image_base64 = product['Image']
-            if isinstance(image_base64, str):
-                missing_padding = len(image_base64) % 4
-                if missing_padding:
-                    image_base64 += '=' * (4 - missing_padding)
-            images_base64.append(image_base64)
-    return images_base64
+def checkFormat(image_base64):
+    if isinstance(image_base64, str):
+        missing_padding = len(image_base64) % 4
+        if missing_padding:
+            image_base64 += '=' * (4 - missing_padding)
+    return image_base64
 
 # Plots image for debugging
 def displayImage(image):
@@ -66,17 +67,21 @@ def removeBackground(image_base64):
         print(f"Fehler beim Verarbeiten des Bildes: {e}")
         return None
 
+def getOptimizedImage(product):
+    #allProducts = getAllProducts(collection)
+    image_base64 = checkFormat(product)
+    withoutBack = removeBackground(image_base64)
+    if withoutBack:
+        denoised_image = removeNoise(withoutBack)
+        thresholded_image = applyThreshold(denoised_image)
+        masked_image = applyMask(np.array(withoutBack), np.array(thresholded_image))
+        #displayImage(masked_image)
+    return image_base64
+
 
 def main():
-    allProducts = getAllProducts("Spielzeugpistolen")
-    images_base64 = getAllImagesFromBase64(allProducts)
-    for i in range(10):
-        withoutBack = removeBackground(images_base64[i])
-        if withoutBack:
-            denoised_image = removeNoise(withoutBack)
-            thresholded_image = applyThreshold(denoised_image)
-            masked_image = applyMask(np.array(withoutBack), np.array(thresholded_image))
-            displayImage(masked_image)
+    #getOptimizedImages("Spielzeugpistolen")
+    pass
 
 if __name__ == "__main__":
     main()
