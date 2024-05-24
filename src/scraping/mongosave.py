@@ -22,7 +22,6 @@ def store_page(entries, category_name):
     client = MongoClient('mongodb://localhost:27017/')
     db = client['AliExpress']
     collection = db[category_name]
-    collection.create_index('Product Link', unique=True) # Create unique index on 'Product Link'
 
     documents = []
     for entry in entries:
@@ -36,12 +35,29 @@ def store_page(entries, category_name):
         documents.append(document)
 
     # Insert into DB; catch any duplicates
-    try:
-        collection.insert_many(documents, ordered=False)
-    except errors.BulkWriteError as e:
-        write_errors = e.details['writeErrors']
-        for error in write_errors:
-            if error['code'] == 11000:  # Duplicate key error code
-                print(f"INFO: Duplicate entry found in category \"{category_name}\" for Product Link: {error['op']['Product Link']}")
+    #try:
+    collection.insert_many(documents, ordered=False)
+    #except errors.BulkWriteError as e:
+        #write_errors = e.details['writeErrors']
+        #for error in write_errors:
+            #if error['code'] == 11000:  # Duplicate key error code
+                #print(f"INFO: Duplicate entry found in category \"{category_name}\" for Product Link: {error['op']['Product Link']}")
 
     print("DONE saving to Database!")
+
+def check_duplicates(category_name):
+    client = MongoClient('mongodb://localhost:27017/')
+    db = client['AliExpress']
+    collection = db[category_name]
+
+    # Aggregate to find duplicates in 'Product Link'
+    pipeline = [
+        {"$group": {"_id": "$Product Link", "count": {"$sum": 1}}},
+        {"$match": {"count": {"$gt": 1}}}
+    ]
+
+    duplicates = collection.aggregate(pipeline)
+
+    # Print duplicates
+    for duplicate in duplicates:
+        print(duplicate)

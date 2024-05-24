@@ -1,5 +1,6 @@
 name: chendless
 channels:
+  - conda-forge
   - defaults
 dependencies:
   - ca-certificates=2024.3.11=hca03da5_0

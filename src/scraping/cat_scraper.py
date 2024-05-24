@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from mongosave import store_page
+from mongosave import store_page, check_duplicates
 from utils import get_agent, check_window_size
 import time
 
@@ -96,7 +96,7 @@ def extract_category(driver: webdriver, xpath: str):
     return elements[0].get_attribute('value')
 
 def main():
-    final_url = 'https://de.aliexpress.com/w/wholesale-Papierhalter.html?spm=a2g0o.productlist.allcategoriespc.38.564a5e86SLYPp7&categoryUrlParams=%7B"q"%3A"Papierhalter"%2C"s"%3A"qp_nw"%2C"osf"%3A"categoryNagivateOld"%2C"sg_search_params"%3A""%2C"guide_trace"%3A"bd7b74a0-5857-48c9-8a9d-6700c9590969"%2C"scene_id"%3A"30630"%2C"searchBizScene"%3A"openSearch"%2C"recog_lang"%3A"de"%2C"bizScene"%3A"categoryNagivateOld"%2C"guideModule"%3A"unknown"%2C"postCatIds"%3A"15%2C13"%2C"scene"%3A"category_navigate"%7D&isFromCategory=y&page='
+    final_url = 'https://de.aliexpress.com/w/wholesale-Spielzeugpistolen.html?isFromCategory=y&categoryUrlParams=%7B"q"%3A"Spielzeugpistolen"%2C"s"%3A"qp_nw"%2C"osf"%3A"categoryNagivateOld"%2C"sg_search_params"%3A""%2C"guide_trace"%3A"41e60245-04c0-4740-9dcc-244cd7417525"%2C"scene_id"%3A"30630"%2C"searchBizScene"%3A"openSearch"%2C"recog_lang"%3A"de"%2C"bizScene"%3A"categoryNagivateOld"%2C"guideModule"%3A"unknown"%2C"postCatIds"%3A"26%2C100000310"%2C"scene"%3A"category_navigate"%7D&page=4&g=y&SearchText=Spielzeugpistolen&page='
     xpath_cardlistdivs = '//*[@id="card-list"]/div'
     relative_xpath_sold = './div/div/a/div[2]/div[2]/span'
     relative_xpath_name = './div/div/a/div[2]/div[1]'
@@ -111,6 +111,7 @@ def main():
 
     try:
         page_num = 1
+        category = 'cat'
         while True:
             url = final_url + str(page_num)
             hasEntered = navigate_to_category(driver, url)
@@ -128,6 +129,7 @@ def main():
                 # print(f'Div {i}: ', entries[i-1])
             store_page(entries=entries, category_name=category)
             page_num += 1
+        check_duplicates(category_name=category)
     finally:
         driver.quit()
 
