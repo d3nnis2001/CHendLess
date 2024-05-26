@@ -6,6 +6,7 @@ from torchvision import models, transforms
 from PIL import Image
 import requests
 import cv2
+import numpy as np
 from sklearn.cluster import KMeans
 import webcolors
 
@@ -23,12 +24,19 @@ preprocess = transforms.Compose([
 
 
 def load_image_base64(image_base64):
-    image_data = base64.b64decode(image_base64)
-    input_image = Image.open(BytesIO(image_data)).convert("RGB")
-    input_tensor = preprocess(input_image)
-    input_batch = input_tensor.unsqueeze(0)
-    return input_batch
-
+    try:
+        image_data = base64.b64decode(image_base64)
+        input_image = Image.open(BytesIO(image_data)).convert("RGB")
+        input_tensor = preprocess(input_image)
+        input_batch = input_tensor.unsqueeze(0)
+        return input_batch
+    except base64.binascii.Error as e:
+        print(f"Base64 decoding error: {e}")
+    except PIL.UnidentifiedImageError as e:
+        print(f"Cannot identify image file: {e}")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+    return None
 
 
 def load_imagenet_classes():
@@ -36,9 +44,11 @@ def load_imagenet_classes():
     return response.text.split("\n")
 
 
-# Get labels with highest probabilities (greater than 0.5)
 def label_image(image_64):
-    input_batch = (load_image_base64(image_64))
+    input_batch = load_image_base64(image_64)
+
+    if input_batch is None:
+        return []
 
     if torch.cuda.is_available():
         input_batch = input_batch.to('cuda')
@@ -52,13 +62,13 @@ def label_image(image_64):
     imagenet_classes = load_imagenet_classes()
 
     labels = []
-    for i in range(probs.size(0)):
-        if probs[i].item() > 0.5:
-            labels.append((imagenet_classes[ids[i]], probs[i].item()))
+    # Get first entry of ResNet
+    if imagenet_classes[ids[0]]:
+        labels.append((imagenet_classes[ids[0]], probs[0].item()))
 
     return labels
 
-# Gets the closest colour from a colour code
+
 def closest_color(color):
     min_colors = {}
     for key, name in webcolors.CSS3_HEX_TO_NAMES.items():
@@ -69,25 +79,30 @@ def closest_color(color):
         min_colors[(rd + gd + bd)] = name
     return min_colors[min(min_colors.keys())]
 
-# Uses clustering to get the 2 most common colours in a picture
-def get_dominant_colors(image_path, k=2):
-    image = cv2.imread(image_path)
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    image = image.reshape((image.shape[0] * image.shape[1], 3))
 
-    kmeans = KMeans(n_clusters=k)
-    kmeans.fit(image)
-    colors = kmeans.cluster_centers_
+def get_dominant_colors(image_base64, k=2):
+    try:
+        image_data = base64.b64decode(image_base64)
+        image = Image.open(BytesIO(image_data))
+        image = image.convert("RGB")
+        image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+        image = image.reshape((image.shape[0] * image.shape[1], 3))
 
-    dominant_colors = []
-    for color in colors:
-        dominant_colors.append(closest_color(color))
+        kmeans = KMeans(n_clusters=k)
+        kmeans.fit(image)
+        colors = kmeans.cluster_centers_
 
-    return dominant_colors
+        dominant_colors = []
+        for color in colors:
+            dominant_colors.append(closest_color(color))
+
+        return dominant_colors
+    except Exception as e:
+        print(f"Error in get_dominant_colors: {e}")
+        return []
 
 
 if __name__ == "__main__":
-    # TODO: Add connection where it runs for every image before storing inside db
     image_path = "GET IMAGE HERE"
     classification_labels = label_image(image_path)
     dominant_colors = get_dominant_colors(image_path)

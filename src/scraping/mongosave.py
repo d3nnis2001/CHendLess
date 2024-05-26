@@ -4,9 +4,10 @@ from bson.binary import Binary
 from PIL import Image
 from io import BytesIO
 from Preprocessing.labeling import label_image, get_dominant_colors
-from Preprocessing.removeBackground import (getOptimizedImage)
+from Preprocessing.removeBackground import getOptimizedImage
+import base64
 
-keys = ['Name', 'Price', 'Amount sold', 'Image', 'Product Link']
+keys = ['Name', 'Price', 'Amount sold', 'Image', 'Product Link', 'Labeling']
 
 def resize_and_save_image(image_url):
     response = requests.get(image_url)
@@ -16,17 +17,15 @@ def resize_and_save_image(image_url):
     image.save(byte_arr, format='PNG')
     byte_arr = byte_arr.getvalue()
 
-    image_data = Binary(byte_arr)
-    optImg = getOptimizedImage(image_data)
-    opt_data = Binary(optImg)
-    return opt_data
+    return base64.b64encode(byte_arr).decode('utf-8')
 
-def getLabeling(image):
-    classification_labels = label_image(image)
-    dominant_colors = get_dominant_colors(image)
+
+def getLabeling(image_base64):
+    classification_labels = label_image(image_base64)
+    dominant_colors = get_dominant_colors(image_base64)
     return classification_labels, dominant_colors
 
-# The function assumes that the arrays have the same length. Please run this ONLY once this has been ensured
+
 def store_page(entries, category_name):
     client = MongoClient('mongodb://localhost:27017/')
     db = client['AliExpress']
@@ -36,20 +35,27 @@ def store_page(entries, category_name):
     last_Img = ""
     for entry in entries:
         document = {}
-        for i in range(len(entry)+1):
-            if i == len(entry):
-                labeling = getLabeling(last_Img)
-                document[keys[i]] = f"Resnet: {labeling[0]}, Colours: {labeling[1]}"
-            if keys[i] == 'Image':
-                # Resize and save the image, then store the new image path in the document
-                document[keys[i]] = resize_and_save_image(entry[i])
-                last_Img = document[keys[i]]
+        for i in range(len(keys)):
+            if i == len(keys) - 1:  # Handling the last element for labeling
+                if last_Img:
+                    labeling = getLabeling(last_Img)
+                    document[keys[i]] = f"Resnet: {labeling[0]}, Colours: {labeling[1]}"
+                else:
+                    document[keys[i]] = "No image available"
+            elif keys[i] == 'Image':
+                if entry[i]:
+                    resized_image_base64 = resize_and_save_image(entry[i])
+                    document[keys[i]] = resized_image_base64
+                    last_Img = resized_image_base64
+                else:
+                    document[keys[i]] = None
             else:
                 document[keys[i]] = entry[i]
         documents.append(document)
-    collection.insert_many(documents, ordered=False)
 
+    collection.insert_many(documents, ordered=False)
     print("DONE saving to Database!")
+
 
 def check_duplicates(category_name):
     client = MongoClient('mongodb://localhost:27017/')
@@ -61,11 +67,10 @@ def check_duplicates(category_name):
         {"$group": {"_id": "$Product Link", "dups": {"$push": "$_id"}, "count": {"$sum": 1}}},
         {"$match": {"count": {"$gt": 1}}}
     ]
-    
+
     duplicates = collection.aggregate(pipeline)
 
     # Print and remove duplicates
     for duplicate in duplicates:
-        # Skip the first item from the dups list
         for id in duplicate['dups'][1:]:
             collection.delete_one({'_id': id})

@@ -93,7 +93,7 @@ def extract_category(driver: webdriver, xpath: str):
     return elements[0].get_attribute('value')
 
 def main():
-    final_url = 'https://de.aliexpress.com/w/wholesale-Lederhosen.html?spm=a2g0o.productlist.allcategoriespc.25.82b746c7l7KMQo&categoryUrlParams=%7B"q"%3A"Lederhosen"%2C"s"%3A"qp_nw"%2C"osf"%3A"categoryNagivateOld"%2C"sg_search_params"%3A""%2C"guide_trace"%3A"23a2b411-c9d4-4ed5-95ac-7d91c13f6a05"%2C"scene_id"%3A"30630"%2C"searchBizScene"%3A"openSearch"%2C"recog_lang"%3A"de"%2C"bizScene"%3A"categoryNagivateOld"%2C"guideModule"%3A"unknown"%2C"postCatIds"%3A"200000343%2C200001813"%2C"scene"%3A"category_navigate"%7D&isFromCategory=y&page='
+    final_url = 'https://de.aliexpress.com/w/wholesale-Spritzpistole.html?spm=a2g0o.home.allcategoriespc.25.3c5812e29wzpW5&categoryUrlParams=%7B%22q%22%3A%22Spritzpistole%22%2C%22s%22%3A%22qp_nw%22%2C%22osf%22%3A%22categoryNagivateOld%22%2C%22sg_search_params%22%3A%22%22%2C%22guide_trace%22%3A%22b73e96d1-cbaa-4530-9f16-50e0569311e7%22%2C%22scene_id%22%3A%2230630%22%2C%22searchBizScene%22%3A%22openSearch%22%2C%22recog_lang%22%3A%22de%22%2C%22bizScene%22%3A%22categoryNagivateOld%22%2C%22guideModule%22%3A%22unknown%22%2C%22postCatIds%22%3A%221420%22%2C%22scene%22%3A%22category_navigate%22%7D&isFromCategory=y'
     xpath_cardlistdivs = '//*[@id="card-list"]/div'
     relative_xpath_sold = './div/div/a/div[2]/div[2]/span'
     relative_xpath_name = './div/div/a/div[2]/div[1]'
