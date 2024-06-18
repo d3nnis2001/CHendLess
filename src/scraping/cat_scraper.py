@@ -9,6 +9,7 @@ from mongosave import store_page, check_duplicates
 from utils import get_agent, check_window_size, trim_link
 import time
 import winsound
+import re
 
 sleep = 2
 
@@ -101,6 +102,16 @@ def add_page_to_link(link: str):
         link += page
     return link
 
+def link(value):
+    # Check if link is valid
+    link = str(value)
+    regex = re.compile(r'^(?:http|ftp)s?://.*')
+    
+    if not link or not re.match(regex, link) or link == '':
+        raise TypeError("The input must be a valid URL.")
+    
+    return link
+
 @Gooey(show_preview_warning = False,
        program_name = "CHendLess",
        show_success_modal = False,
@@ -118,7 +129,7 @@ def add_page_to_link(link: str):
         }])
 def main():
     parser = GooeyParser(description="Scrape products from an AliExpress category and store them in a MongoDB database.")
-    parser.add_argument("Link", action = "store", help = "The category to be scraped", type = str)
+    parser.add_argument("Link", action = "store", help = "The category to be scraped", type = link)
     parser.add_argument("--head", action = "store_true", metavar = "Run with head", help = "When executed in head mode, Firefox will launch in the foreground rather than operating in the background.")
 
     args = parser.parse_args()
