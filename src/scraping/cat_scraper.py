@@ -3,9 +3,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
+from gooey import Gooey, GooeyParser
+from os import path
 from mongosave import store_page, check_duplicates
 from utils import get_agent, check_window_size, trim_link
 import time
+import winsound
 
 sleep = 2
 
@@ -92,8 +95,35 @@ def extract_category(driver: webdriver, xpath: str):
     elements = driver.find_elements(By.XPATH, xpath)
     return elements[0].get_attribute('value')
 
+def add_page_to_link(link: str):
+    page: str = "&page="
+    if not link.endswith(page):
+        link += page
+    return link
+
+@Gooey(show_preview_warning = False,
+       program_name = "CHendLess",
+       show_success_modal = False,
+       show_restart_button = False,
+       image_dir = path.dirname(path.abspath(__file__)) + "\images",
+       # clear_before_run = True,
+       default_size = (650, 580),
+       menu = [{
+        'name': 'Info',
+        'items': [{
+                'type': 'Link',
+                'menuTitle': 'GitHub Repository',
+                'url': 'https://github.com/d3nnis2001/CHendLess'
+            }]
+        }])
 def main():
-    final_url = 'https://de.aliexpress.com/w/wholesale-Partyspiele.html?spm=a2g0o.home.allcategoriespc.55.c80212e2EyQbPl&categoryUrlParams=%7B%22q%22%3A%22Partyspiele%22%2C%22s%22%3A%22qp_nw%22%2C%22osf%22%3A%22categoryNagivateOld%22%2C%22sg_search_params%22%3A%22%22%2C%22guide_trace%22%3A%220dd7dbe0-1225-40de-bd8a-4f6740e5338e%22%2C%22scene_id%22%3A%2230630%22%2C%22searchBizScene%22%3A%22openSearch%22%2C%22recog_lang%22%3A%22de%22%2C%22bizScene%22%3A%22categoryNagivateOld%22%2C%22guideModule%22%3A%22unknown%22%2C%22postCatIds%22%3A%2226%2C100000310%22%2C%22scene%22%3A%22category_navigate%22%7D&isFromCategory=y&page'
+    parser = GooeyParser(description="Scrape products from an AliExpress category and store them in a MongoDB database.")
+    parser.add_argument("Link", action = "store", help = "The category to be scraped", type = str)
+    parser.add_argument("--head", action = "store_true", metavar = "Run with head", help = "When executed in head mode, Firefox will launch in the foreground rather than operating in the background.")
+
+    args = parser.parse_args()
+
+    final_url = add_page_to_link(args.Link)
     xpath_cardlistdivs = '//*[@id="card-list"]/div'
     relative_xpath_sold = './div/div/a/div[2]/div[2]/span'
     relative_xpath_name = './div/div/a/div[2]/div[1]'
@@ -104,7 +134,7 @@ def main():
     xpath_category = '//*[@id="search-words"]'
     print("INIT")
 
-    driver = init_driver(False)
+    driver = init_driver(not args.head)
     check_window_size(driver=driver)
 
     try:
@@ -129,6 +159,7 @@ def main():
             page_num += 1
         check_duplicates(category_name=category)
     finally:
+        winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
         driver.quit()
 
 if __name__ == "__main__":
