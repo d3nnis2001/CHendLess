@@ -1,9 +1,11 @@
 <template>
     <div 
       :class="[
-        'flex items-center flex-row box-border justify-between lg:justify-around p-10 border-2 m-7 md:m-10 lg:m-20 rounded-2xl border-gray-400', 
+        'flex items-center flex-row box-border justify-between lg:justify-around p-10 border-2 m-7 md:m-10 lg:m-20 rounded-2xl border-gray-400 h-72 md:h-80 lg:h-96',
+        { 'step-component': isVisible }
       ]" 
-      :style="{ backgroundColor: '#323232'}"
+      :style="{ backgroundColor: '#323232', opacity: isVisible ? 1 : 0 }"
+      ref="stepComponent"
     >
       <div v-if="imageLeft">
         <img :src="image" :alt="altText" class="image-steps-hover">
@@ -54,17 +56,61 @@
         type: String,
         default: ''
       }
+    },
+    data() {
+      return {
+        isVisible: false
+      };
+    },
+    mounted() {
+      window.addEventListener('scroll', this.handleScroll);
+      this.handleScroll(); // Check initial scroll position
+    },
+    destroyed() {
+      window.removeEventListener('scroll', this.handleScroll);
+    },
+    methods: {
+      handleScroll() {
+        const componentTop = this.$refs.stepComponent.getBoundingClientRect().top;
+        const viewportHeight = window.innerHeight;
+        const offset = viewportHeight * 0.10;
+        
+        // Trigger when the entire component is in the viewport
+        if (componentTop < viewportHeight-offset && componentTop > -this.$refs.stepComponent.clientHeight) {
+          this.isVisible = true;
+          window.removeEventListener('scroll', this.handleScroll); // Optional: Remove listener once visible
+        }
+      }
     }
-  }
+  };
   </script>
-
-<style>
-    .image-steps-hover {
+  
+  <style>
+  .image-steps-hover {
     transition: ease-in-out;
     transition-duration: 500ms;
+  }
+  
+  .image-steps-hover:hover {
+    transform: scale(1.1); /* Adjust the scaling property */
+  }
+  
+  @keyframes bounceIn {
+    0% {
+      opacity: 0;
+      transform: translateY(50px);
     }
-
-    .image-steps-hover:hover {
-    scale: 110%;
+    50% {
+      opacity: 0.5;
+      transform: translateY(-10px);
     }
-</style>
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .step-component {
+    animation: bounceIn 1s ease-out; /* Adjust animation duration and easing as needed */
+  }
+  </style>
