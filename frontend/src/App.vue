@@ -1,7 +1,7 @@
 
 
 <template>
-  <div class="hero flex flex-col h-screen bg-no-repeat bg-cover bg-center absolute w-screen max-w-screen rounded-b-3xl">
+  <div class="hero flex flex-col h-screen bg-no-repeat bg-cover bg-center absolute w-fit rounded-b-3xl">
     <CustomHeadBar></CustomHeadBar>
     <div class="flex-container">
       <div class="content">
@@ -74,7 +74,6 @@ export default {
   padding-left: 10%;
   padding-top: 10vh;
 }
-
 
 h1 {
   font-size: 4rem;
