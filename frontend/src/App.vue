@@ -6,7 +6,7 @@
     <div class="flex-container">
       <div class="content">
         <Headline>Never buy <br> </Headline>
-        <AnimatedGradientText :glow=true>overpriced</AnimatedGradientText>
+        <AnimatedGradientText :glow=true class="my-1.5">overpriced</AnimatedGradientText>
         <Headline>again.</Headline>
         <PurpleBlueButton class="mt-10">
           Start now
