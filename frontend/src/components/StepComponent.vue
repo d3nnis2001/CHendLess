@@ -1,29 +1,29 @@
 <template>
-    <div 
-      :class="[
-        'flex items-center flex-row box-border justify-between lg:justify-around p-10 border-2 m-7 md:m-10 lg:m-20 rounded-2xl border-gray-400 h-72 md:h-80 lg:h-96',
-        { 'step-component': isVisible }
-      ]" 
-      :style="{ backgroundColor: '#323232', opacity: isVisible ? 1 : 0 }"
-      ref="stepComponent"
-    >
-      <div v-if="imageLeft">
-        <img :src="image" :alt="altText" class="image-steps-hover">
-      </div>
-      <div :class="[imageLeft ? 'text-right' : 'text-left']">
-        <p :class="textClass">
-          <strong>
-            Step {{ step }}:<br>{{ title }}
-          </strong>
-        </p>
-        <p class="mt-10" v-html="description"></p>
-      </div>
-      <div v-if="!imageLeft">
-        <img :src="image" :alt="altText" class="image-steps-hover">
-      </div>
+  <div 
+    :class="[
+      'flex items-center flex-row box-border justify-between lg:justify-around p-10 border-2 m-7 md:m-10 lg:m-20 rounded-2xl border-gray-400 h-72 md:h-80 lg:h-96',
+      { 'step-component': isVisible }
+    ]" 
+    :style="{ backgroundColor: '#323232', opacity: isVisible ? 1 : 0 }"
+    ref="stepComponent"
+  >
+    <div v-if="imageLeft">
+      <img :src="image" :alt="altText" class="image-steps-hover shadow-2xl hover:shadow-zinc-900">
     </div>
-  </template>
-  
+    <div :class="[imageLeft ? 'text-right' : 'text-left']">
+      <p :class="textClass">
+        <strong>
+          Step {{ step }}:<br>{{ title }}
+        </strong>
+      </p>
+      <p class="mt-10" v-html="description"></p>
+    </div>
+    <div v-if="!imageLeft">
+      <img :src="image" :alt="altText" class="image-steps-hover shadow-2xl hover:shadow-zinc-900">
+    </div>
+  </div>
+</template>
+
   <script>
   export default {
     name: 'StepComponent',

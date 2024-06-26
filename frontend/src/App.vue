@@ -21,7 +21,7 @@
       :step=1
       title="Upload a picture" 
       description="Simply upload a picture or paste a link of the product you want to find" 
-      image="/src/assets/laptop.svg" 
+      image="/src/assets/laptop2.png" 
       altText="laptop"/>
 
     <StepComponent 
