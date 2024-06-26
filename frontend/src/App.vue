@@ -5,7 +5,7 @@
     <CustomHeadBar></CustomHeadBar>
     <div class="flex-container">
       <div class="content">
-        <p class="styled-text text-5xl text-left font-bold md:text-8xl lg:text-8xl">Never buy <br> <span class="highlight">overpriced</span> <br> again.</p>
+        <p class="styled-text text-5xl text-left font-bold md:text-8xl lg:text-8xl text-shadow-md shadow-black-dark">Never buy <br> <span class="highlight">overpriced</span> <br> again.</p>
         <PurpleBlueButton class="mt-10">
           Start now
         </PurpleBlueButton>
