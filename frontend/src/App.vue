@@ -1,5 +1,5 @@
 <template>
-  <div class="hero flex flex-col h-screen bg-no-repeat bg-cover bg-center absolute w-screen max-w-screen">
+  <div class="hero flex flex-col h-screen bg-no-repeat bg-cover bg-center absolute w-screen max-w-screen rounded-b-3xl">
     <CustomHeadBar></CustomHeadBar>
     <div class="flex-container">
       <div class="content">
@@ -16,7 +16,7 @@
       :imageLeft=false 
       :step=1
       title="Upload a picture" 
-      description="Simply upload a picture or paste a <br> link of the product you want to find" 
+      description="Simply upload a picture or paste a link of the product you want to find" 
       image="/src/assets/laptop.svg" 
       altText="laptop"/>
 
@@ -24,7 +24,7 @@
       :imageLeft=true 
       :step=2 
       title="Insert a price" 
-      description="Put in the price you would've originally <br> paid for the queried product" 
+      description="Put in the price you would've originally paid for the queried product" 
       image="/src/assets/part2instr.png" 
       altText="numbers"/>
 
@@ -32,7 +32,7 @@
       :imageLeft=false 
       :step=3
       title="Get the results" 
-      description="After checking the web for <br> correlating products, we get you <br> a list of all shops that offer the product" 
+      description="After checking the web for correlating products, we get you a list of all shops that offer the product" 
       image="/src/assets/results.png" 
       altText="results"/>
   </div>

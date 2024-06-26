@@ -1,7 +1,7 @@
 <template>
     <div 
       :class="[
-        'flex items-center flex-row box-border justify-around p-10 border-2 m-7 md:m-10 lg:m-20 rounded-2xl border-gray-400'
+        'flex items-center flex-row box-border justify-between lg:justify-around p-10 border-2 m-7 md:m-10 lg:m-20 rounded-2xl border-gray-400', 
       ]" 
       :style="{ backgroundColor: '#323232'}"
     >
@@ -61,10 +61,10 @@
 <style>
     .image-steps-hover {
     transition: ease-in-out;
-    transition-duration: 650ms;
+    transition-duration: 500ms;
     }
 
     .image-steps-hover:hover {
-    scale: 120%;
+    scale: 110%;
     }
 </style>
