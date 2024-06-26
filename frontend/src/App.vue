@@ -5,7 +5,9 @@
     <CustomHeadBar></CustomHeadBar>
     <div class="flex-container">
       <div class="content">
-        <p class="styled-text text-5xl text-left font-bold md:text-8xl lg:text-8xl text-shadow-md shadow-black-dark">Never buy <br> <span class="highlight">overpriced</span> <br> again.</p>
+        <Headline>Never buy <br> </Headline>
+        <AnimatedGradientText :glow=true>overpriced</AnimatedGradientText>
+        <Headline>again.</Headline>
         <PurpleBlueButton class="mt-10">
           Start now
         </PurpleBlueButton>
@@ -45,10 +47,12 @@
 import CustomHeadBar from "./components/headbar.vue";
 import PurpleBlueButton from "./components/purplebluebutton.vue";
 import StepComponent from "./components/StepComponent.vue";
+import Headline from "./components/Headline.vue";
+import AnimatedGradientText from "./components/AnimatedGradientText.vue";
 
 export default {
   name: 'IndexPage',
-  components: {PurpleBlueButton, CustomHeadBar, StepComponent}
+  components: {PurpleBlueButton, CustomHeadBar, StepComponent, Headline, AnimatedGradientText}
 }
 </script>
 
@@ -71,9 +75,6 @@ export default {
   padding-top: 10vh;
 }
 
-.styled-text {
-  line-height: 1.15;
-}
 
 h1 {
   font-size: 4rem;

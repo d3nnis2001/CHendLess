@@ -1,7 +1,7 @@
 <template>
   <button type="button"
           class="gradientbutton relative text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800
-          font-medium text-sm px-5 md:px-7 lg:px-10 py-2.5 text-center rounded-full
+          font-medium text-sm px-7 md:px-14 lg:px-20 py-2.5 text-center rounded-full
           h-fit w-fit md:text-3xl">
     <slot>Default Text</slot>
   </button>

@@ -12,6 +12,10 @@ module.exports = {
         DEFAULT: '0 2px 4px var(--tw-shadow-color)',
         md: '0 4px 8px var(--tw-shadow-color)',
         lg: '0 8px 16px var(--tw-shadow-color)',
+        none: 'none',
+      },
+      fontSize: {
+        '10xl': '135px',
       },
       colors: {
         primary: {
@@ -38,7 +42,20 @@ module.exports = {
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
-      }
+      },
+      keyframes: {
+        gradient: {
+          '0%': {
+            backgroundPosition: '0% 50%',
+          },
+          '100%': {
+            backgroundPosition: '100% 50%',
+          },
+        },
+      },
+      animation: {
+        gradient: 'gradient 6s linear infinite',
+      },
     },
   },
   plugins: [
