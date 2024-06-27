@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div class="min-h-screen flex flex-col">
     <CustomHeadBar :purpleYellow="true"></CustomHeadBar>
-    <div class="hero-footer content-center flex flex-col justify-center items-center rounded-t-3xl mt-20">
-      <div class="items-center flex flex-col lg:flex-row box-border justify-items-center lg:justify-center p-16 border-2
+    <div class="flex-grow hero-footer content-center flex flex-col justify-center items-center">
+      <div class="items-center flex flex-col lg:flex-row box-border justify-items-center lg:justify-center p-5 sm:p-10 md:p-16 border-2
       m-7 md:m-10 rounded-3xl border-gray-400 h-auto lg:h-96
       bg-white-dark bg-opacity-15 shadow-2xl shadow-zinc-900">
-        <div class="bordermoving flex flex-col justify-center items-center p-10 m-4 rounded-3xl">
+        <div class="bordermoving flex flex-col justify-center items-center p-10 md:m-4 rounded-3xl">
           <img src='../../src/assets/upload.png' alt="Upload" class="w-16 h-16 mb-4">
           <p class="text-2xl text-center mb-4">
             <strong>Drag and Drop to upload</strong> <br> or
@@ -13,10 +13,10 @@
           <BrowseButton></BrowseButton>
         </div>
         <div class="flex flex-col text-center ml-0 lg:ml-10 mt-10 lg:mt-0">
-          <p class="font-bold text-5xl mb-5">
+          <p class="font-bold text-2xl md:text-5xl mb-5">
             Upload your image
           </p>
-          <p class="text-4xl">
+          <p class="text-xl md:text-4xl">
             JPG, GIF or PNG formats that <br> are max. 2000 x 2000 or MB. <br>
             If your image size is bigger,<br> please compress it.
           </p>
