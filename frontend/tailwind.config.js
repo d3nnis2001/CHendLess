@@ -52,6 +52,16 @@ module.exports = {
         sans: ['Inter', 'sans-serif'],
       },
       keyframes: {
+        slidein: {
+          from: {
+            opacity: "0",
+            transform: 'translateX(-10px)',
+          },
+          to: {
+            opacity: "1",
+            transform: 'translateX(0)',
+          },
+        },
         gradient: {
           '0%': {
             backgroundPosition: '0% 50%',
@@ -63,6 +73,7 @@ module.exports = {
       },
       animation: {
         gradient: 'gradient 6s linear infinite',
+        slidein: 'slidein 1s ease var(--slidein-delay, 0) forwards'
       },
     },
   },
