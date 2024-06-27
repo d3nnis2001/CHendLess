@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen flex flex-col">
-    <CustomHeadBar :purpleYellow="true"></CustomHeadBar>
+    <CustomHeadBar :gradientVersion=2></CustomHeadBar>
     <div class="flex-grow hero-footer content-center flex flex-col justify-center items-center">
       <div class="items-center flex flex-col lg:flex-row box-border justify-items-center lg:justify-center p-5 sm:p-10 md:p-16 border-2
       m-7 md:m-10 rounded-3xl border-gray-400 h-auto lg:h-96

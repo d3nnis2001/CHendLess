@@ -24,7 +24,6 @@
 
 <style>
   .gradient-text {
-    display: inline; /* or inline-block */
-    /* Other styles as needed */
+    display: inline;
   }
 </style>

@@ -1,16 +1,14 @@
-
-
 <template>
-  <div class="hero flex flex-col h-screen bg-no-repeat bg-cover bg-center absolute w-fit rounded-b-3xl">
-    <CustomHeadBar :purpleYellow=false></CustomHeadBar>
+  <div class="hero flex flex-col h-screen bg-no-repeat bg-cover bg-center absolute rounded-b-3xl">
+    <CustomHeadBar :gradientVersion=1></CustomHeadBar>
     <div class="flex-container">
       <div class="content">
         <Headline>Never buy <br> </Headline>
-        <Headline><AnimatedGradientText :glow=true class="my-1.5">overpriced</AnimatedGradientText></Headline>
+        <Headline><AnimatedGradientText class="my-1.5" :glow=true>overpriced</AnimatedGradientText></Headline>
         <Headline>again.</Headline>
-        <PurpleBlueButton class="mt-10" @click="navigateToUpload">
+        <PurpleYellowButton class="mt-10" @click="navigateToUpload" :gradientVersion=1>
           Start now
-        </PurpleBlueButton>
+        </PurpleYellowButton>
       </div>
     </div>
   </div>
@@ -56,26 +54,18 @@
       </purple-yellow-button>
     </div>
   </div>
-
 </template>
 
 <script>
 import CustomHeadBar from "../components/headbar.vue";
-import PurpleBlueButton from "../components/purplebluebutton.vue";
 import StepComponent from "../components/StepComponent.vue";
 import Headline from "../components/Headline.vue";
 import AnimatedGradientText from "../components/AnimatedGradientText.vue";
-import purplebluebutton from "../components/purplebluebutton.vue";
 import PurpleYellowButton from "../components/purpleYellowButton.vue";
 
 export default {
   name: 'Start',
-  computed: {
-    purplebluebutton() {
-      return purplebluebutton
-    }
-  },
-  components: {PurpleYellowButton, PurpleBlueButton, CustomHeadBar, StepComponent, Headline, AnimatedGradientText},
+  components: {PurpleYellowButton, CustomHeadBar, StepComponent, Headline, AnimatedGradientText},
   methods: {
     navigateToUpload() {
       this.$router.push('/upload');
@@ -91,8 +81,10 @@ export default {
   background: url('../assets/banner.svg') no-repeat center center;
   background-size: cover;
   height: 100vh;
+  width: 100vh;
   position: relative;
   min-width: 100%;
+  max-width:100%;
 }
 
 .hero-footer {
@@ -101,6 +93,7 @@ export default {
   height: 75vh;
   position: relative;
   min-width: 100%;
+  max-width:100%;
 }
 
 .flex-container {
