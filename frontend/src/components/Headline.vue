@@ -1,47 +1,16 @@
 <template>
-  <p :class="computedClasses">
+  <p class="styled-text text-left font-bold text-5xl md:text-8xl lg:text-10xl text-shadow-md shadow-black-dark">
     <slot>Default Text</slot>
   </p>
 </template>
 
 <script>
 export default {
-  name: 'Headline',
-  props: {
-    sizeDefault: {
-      type: String,
-      default: "text-5xl",
-      required: false
-    },
-    sizeMD: {
-      type: String,
-      default: "text-8xl",
-      required: false
-    },
-    sizeLG: {
-      type: String,
-      default: "text-10xl",
-      required: false
-    }
-  },
-  computed: {
-    computedClasses() {
-      return [
-        'styled-text',
-        `${this.sizeDefault}`,
-        'text-left',
-        'font-bold',
-        `md:${this.sizeMD}`,
-        `lg:${this.sizeLG}`,
-        'text-shadow-md',
-        'shadow-black-dark'
-      ];
-    }
-  }
+  name: 'Headline'
 };
 </script>
 
-<style>
+<style scoped>
 .styled-text {
   line-height: 1.15;
 }

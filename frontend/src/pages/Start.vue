@@ -6,7 +6,7 @@
     <div class="flex-container">
       <div class="content">
         <Headline>Never buy <br> </Headline>
-        <AnimatedGradientText :glow=true class="my-1.5">overpriced</AnimatedGradientText>
+        <Headline><AnimatedGradientText :glow=true class="my-1.5">overpriced</AnimatedGradientText></Headline>
         <Headline>again.</Headline>
         <PurpleBlueButton class="mt-10" @click="navigateToUpload">
           Start now
@@ -42,15 +42,15 @@
   </div>
 
   <div class="hero-footer content-center rounded-t-3xl">
-    <div class="items-center grid grid-rows-3 box-border justify-items-center lg:justify-around p-10 border-2
+    <div class="items-center grid grid-rows-3 box-border justify-items-center lg:justify-around p-5 sm:p-10 border-2 text-center
     m-7 md:m-10 lg:m-20 rounded-3xl border-gray-400 h-72 md:h-80 lg:h-96
     bg-white-dark bg-opacity-20 backdrop-blur-2xl shadow-2xl shadow-zinc-900">
-      <Headline class="text-shadow-none">
+      <span class="text-shadow-none font-semibold text-2xl sm:text-4xl md:text-7xl xl:text-8xl 2xl:text-9xl">
         Get started now!
-      </Headline>
-      <span class="text-2xl">
-      Register now and get <AnimatedGradientText glow :size-default="'text-sm'" :size-md="'text-sm'" :size-l-g="'text-sm'">1 weekly</AnimatedGradientText> scan for free!
-    </span>
+      </span>
+      <span class="leading-tight text-lg sm:text-2xl md:text-3xl lg:text-4xl 2xl:text-5xl">
+        Register now and get <AnimatedGradientText :glow=true>1 weekly</AnimatedGradientText> scan for free!
+      </span>
       <purple-yellow-button>
         Start now
       </purple-yellow-button>
@@ -117,6 +117,10 @@ h1 {
   font-size: 4rem;
   font-weight: bold;
 }
+
+/* * { 
+  border: 1px solid red; 
+} */
 
 .highlight {
   color: #f39c12;
