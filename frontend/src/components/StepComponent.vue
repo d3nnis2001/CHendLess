@@ -73,7 +73,7 @@
       handleScroll() {
         const componentTop = this.$refs.stepComponent.getBoundingClientRect().top;
         const viewportHeight = window.innerHeight;
-        const offset = viewportHeight * 0.10;
+        const offset = viewportHeight * 0.15;
         
         // Trigger when the entire component is in the viewport
         if (componentTop < viewportHeight-offset && componentTop > -this.$refs.stepComponent.clientHeight) {

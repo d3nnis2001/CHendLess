@@ -40,19 +40,7 @@
   </div>
 
   <div class="hero-footer content-center rounded-t-3xl">
-    <div class="items-center grid grid-rows-3 box-border justify-items-center lg:justify-around p-5 sm:p-10 border-2 text-center
-    m-7 md:m-10 lg:m-20 rounded-3xl border-gray-400 h-72 md:h-80 lg:h-96
-    bg-white-dark bg-opacity-20 backdrop-blur-2xl shadow-2xl shadow-zinc-900">
-      <span class="text-shadow-none font-semibold text-2xl sm:text-4xl md:text-7xl xl:text-8xl 2xl:text-9xl">
-        Get started now!
-      </span>
-      <span class="leading-tight text-lg sm:text-2xl md:text-3xl lg:text-4xl 2xl:text-5xl">
-        Register now and get <AnimatedGradientText :glow=true>1 weekly</AnimatedGradientText> scan for free!
-      </span>
-      <purple-yellow-button>
-        Start now
-      </purple-yellow-button>
-    </div>
+    <GetStartedNow></GetStartedNow>
   </div>
 </template>
 
@@ -62,10 +50,11 @@ import StepComponent from "../components/StepComponent.vue";
 import Headline from "../components/Headline.vue";
 import AnimatedGradientText from "../components/AnimatedGradientText.vue";
 import PurpleYellowButton from "../components/purpleYellowButton.vue";
+import GetStartedNow from "../components/GetStartedNow.vue";
 
 export default {
   name: 'Start',
-  components: {PurpleYellowButton, CustomHeadBar, StepComponent, Headline, AnimatedGradientText},
+  components: {PurpleYellowButton, CustomHeadBar, StepComponent, Headline, AnimatedGradientText, GetStartedNow},
   methods: {
     navigateToUpload() {
       this.$router.push('/upload');
@@ -77,6 +66,7 @@ export default {
 </script>
 
 <style scoped>
+
 .hero {
   background: url('../assets/banner.svg') no-repeat center center;
   background-size: cover;

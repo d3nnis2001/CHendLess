@@ -1,4 +1,5 @@
 const plugin = require('tailwindcss/plugin')
+const { h } = require('vue')
 
 module.exports = {
   content: [
@@ -7,6 +8,12 @@ module.exports = {
   ],
   theme: {
     extend: {
+      height: {
+        100: '25rem',
+        125: '31.25rem',
+        150: '37.5rem',
+        200: '50rem',
+      },
       textShadow: {
         sm: '0 1px 2px var(--tw-shadow-color)',
         DEFAULT: '0 2px 4px var(--tw-shadow-color)',
