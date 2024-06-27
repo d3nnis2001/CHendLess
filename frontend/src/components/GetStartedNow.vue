@@ -53,7 +53,7 @@ export default {
 </script>
     
 <style>
-@keyframes bounceIn {
+@keyframes bounceInGetStartedNow {
     0% {
     opacity: 0;
     transform: translateY(-50px);
@@ -69,6 +69,6 @@ export default {
 }
 
 .getstartednow {
-    animation: bounceIn 1s ease-out; /* Adjust animation duration and easing as needed */
+    animation: bounceInGetStartedNow 1s ease-out; /* Adjust animation duration and easing as needed */
 }
 </style>
