@@ -1,7 +1,7 @@
 <template>
   <div
     :class="[
-      'flex items-center flex-row box-border justify-between lg:justify-around p-10 border-2 my-7 md:my-10 lg:my-20 mx-7 md:mx-10 lg:mx-20 xl:mx-32 2xl:mx-40 rounded-3xl border-gray-400 h-72 md:h-80 lg:h-96',
+      'flex items-center flex-row box-border justify-between xl:px-24 p-10 border-2 my-7 md:my-10 lg:my-20 mx-7 md:mx-10 lg:mx-20 xl:mx-32 2xl:mx-40 rounded-3xl border-gray-400 h-72 md:h-80 lg:h-96',
       { 'step-component': isVisible }
     ]"
     :style="{ backgroundColor: '#323232', opacity: isVisible ? 1 : 0 }"
@@ -16,7 +16,7 @@
           Step {{ step }}:<br>{{ title }}
         </strong>
       </p>
-      <p class="mt-10" v-html="description"></p>
+      <p class="mt-2.5 md:mt-5 lg:mt-7 text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl" v-html="description"></p>
     </div>
     <div v-if="!imageLeft">
       <img :src="image" :alt="altText" class="image-steps-hover shadow-2xl hover:shadow-zinc-900">
@@ -38,7 +38,7 @@
       },
       textClass: {
         type: String,
-        default: 'text-2xl md:text-5xl lg:text-7xl'
+        default: 'text-xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl'
       },
       title: {
         type: String,
