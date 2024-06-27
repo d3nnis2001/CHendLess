@@ -22,6 +22,7 @@ module.exports = {
         none: 'none',
       },
       fontSize: {
+        'ssm': '10px',
         '10xl': '135px',
       },
       colors: {

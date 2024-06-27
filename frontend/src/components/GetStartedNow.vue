@@ -15,60 +15,60 @@
         Start now
       </PurpleYellowButton>
     </div>
-  </template>
+</template>
   
-    <script>
-    import AnimatedGradientText from "../components/AnimatedGradientText.vue";
-    import PurpleYellowButton from "../components/purpleYellowButton.vue";
+<script>
+import AnimatedGradientText from "../components/AnimatedGradientText.vue";
+import PurpleYellowButton from "../components/purpleYellowButton.vue";
 
-    export default {
-      name: 'GetStartedNow',
-      components: {PurpleYellowButton, AnimatedGradientText},
-      data() {
-        return {
-          isVisible: false
-        };
-      },
-      mounted() {
-        window.addEventListener('scroll', this.handleScroll);
-        this.handleScroll(); // Check initial scroll position
-      },
-      destroyed() {
-        window.removeEventListener('scroll', this.handleScroll);
-      },
-      methods: {
-        handleScroll() {
-          const componentTop = this.$refs.getstartednow.getBoundingClientRect().top;
-          const viewportHeight = window.innerHeight;
-          const offset = viewportHeight * 0.25;
-          
-          // Trigger when the entire component is in the viewport
-          if (componentTop < viewportHeight-offset && componentTop > -this.$refs.getstartednow.clientHeight) {
-            this.isVisible = true;
-            window.removeEventListener('scroll', this.handleScroll); // Optional: Remove listener once visible
-          }
-        }
-      }
+export default {
+    name: 'GetStartedNow',
+    components: {PurpleYellowButton, AnimatedGradientText},
+    data() {
+    return {
+        isVisible: false
     };
-    </script>
-    
-    <style>
-    @keyframes bounceIn {
-      0% {
-        opacity: 0;
-        transform: translateY(-50px);
-      }
-      50% {
-        opacity: 0.5;
-        transform: translateY(10px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    },
+    mounted() {
+    window.addEventListener('scroll', this.handleScroll);
+    this.handleScroll(); // Check initial scroll position
+    },
+    destroyed() {
+    window.removeEventListener('scroll', this.handleScroll);
+    },
+    methods: {
+    handleScroll() {
+        const componentTop = this.$refs.getstartednow.getBoundingClientRect().top;
+        const viewportHeight = window.innerHeight;
+        const offset = viewportHeight * 0.25;
+        
+        // Trigger when the entire component is in the viewport
+        if (componentTop < viewportHeight-offset && componentTop > -this.$refs.getstartednow.clientHeight) {
+        this.isVisible = true;
+        window.removeEventListener('scroll', this.handleScroll); // Optional: Remove listener once visible
+        }
     }
-    
-    .getstartednow {
-      animation: bounceIn 1s ease-out; /* Adjust animation duration and easing as needed */
     }
-    </style>
+};
+</script>
+    
+<style>
+@keyframes bounceIn {
+    0% {
+    opacity: 0;
+    transform: translateY(-50px);
+    }
+    50% {
+    opacity: 0.5;
+    transform: translateY(10px);
+    }
+    100% {
+    opacity: 1;
+    transform: translateY(0);
+    }
+}
+
+.getstartednow {
+    animation: bounceIn 1s ease-out; /* Adjust animation duration and easing as needed */
+}
+</style>
