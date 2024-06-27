@@ -1,11 +1,11 @@
 <template>
-    <div :class="['items-center grid grid-rows-3 box-border justify-items-center lg:justify-around p-5 py-10 sm:p-10 lg:p-16 xl:p-20 xl:py-24 border-2 text-center m-7 md:m-10 lg:m-20 rounded-3xl border-gray-400 h-72 md:h-80 lg:h-96 xl:h-100 2xl:h-125 bg-white-dark bg-opacity-20 backdrop-blur-2xl shadow-2xl shadow-zinc-900',
+    <div :class="['items-center grid grid-rows-3 box-border justify-items-center lg:justify-around p-5 py-10 sm:p-10 lg:p-16 xl:p-20 xl:py-24 border-2 text-center m-7 md:m-10 lg:m-20 xl:m-32 2xl:m-40 rounded-3xl border-gray-400 h-72 md:h-80 lg:h-96 xl:h-100 2xl:h-125 bg-white-dark bg-opacity-20 backdrop-blur-2xl shadow-2xl shadow-zinc-900',
         { 'getstartednow': isVisible }
     ]"
     :style="{ opacity: isVisible ? 1 : 0 }"
     ref="getstartednow"
     >
-      <span class="text-shadow-none font-semibold text-2xl sm:text-4xl md:text-7xl xl:text-8xl 2xl:text-10xl">
+      <span class="text-shadow-none font-semibold text-2xl sm:text-4xl md:text-7xl xl:text-8xl 2xl:text-9xl">
         Get started now!
       </span>
       <span class="leading-tight text-lg sm:text-xl md:text-2xl lg:text-4xl 2xl:text-5xl">
