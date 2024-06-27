@@ -23,18 +23,21 @@
         </div>
       </div>
     </div>
+    <Impressum/>
   </div>
 </template>
 
 <script>
 import CustomHeadBar from "../components/headbar.vue";
 import BrowseButton from "../components/BrowseButton.vue";
+import Impressum from "../components/Impressum.vue";
 
 export default {
   name: 'Upload',
   components: {
     BrowseButton,
-    CustomHeadBar
+    CustomHeadBar,
+    Impressum
   }
 };
 </script>
