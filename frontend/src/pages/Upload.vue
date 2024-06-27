@@ -23,8 +23,8 @@
         </div>
       </div>
     </div>
-    <Impressum/>
   </div>
+<Impressum/>
 </template>
 
 <script>

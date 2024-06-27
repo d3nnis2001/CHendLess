@@ -8,22 +8,22 @@
             <!-- 75% Column -->
             <div class="grid grid-cols-2 grid-rows-2 md:flex w-full h-full items-center justify-around font-medium text-ssm sm:text-base md:text-lg lg:text-2xl xl:text-3xl 2xl:text-4xl">
                 <div>
-                    <a href="https://www.tiktok.com/explore" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.tiktok.com/explore" target="_blank" rel="noopener noreferrer" class="hover:underline">
                         <span>TikTok</span>
                     </a>
                 </div>
                 <div>
-                    <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="hover:underline">
                         <span>Instagram</span>
                     </a>
                 </div>
                 <div>
-                    <RouterLink to="/datenschutz">
+                    <RouterLink to="/datenschutz" class="hover:underline">
                         <span>Datenschutzerklärung</span>
                     </RouterLink>
                 </div>
                 <div>
-                    <RouterLink to="/impressum">
+                    <RouterLink to="/impressum" class="hover:underline">
                         <span>Impressum</span>
                     </RouterLink>
                 </div>
