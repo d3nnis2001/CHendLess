@@ -3,12 +3,10 @@
     <CustomHeadBar :gradientVersion=1></CustomHeadBar>
     <div class="flex-container">
       <div class="content">
-        <div class="animate-slidein [--slidein-delay:300ms] opacity-0">
-          <Headline>Never buy <br> </Headline>
-          <Headline><AnimatedGradientText class="my-1.5" :glow=true>overpriced</AnimatedGradientText></Headline>
-          <Headline>again.</Headline>
-        </div>
-        <PurpleYellowButton class="mt-10 animate-slidein [--slidein-delay:400ms] opacity-0" @click="navigateToUpload" :gradientVersion=1>
+          <Headline class="animate-slidein [--slidein-delay:300ms] opacity-0">Never buy <br> </Headline>
+          <Headline class="animate-slidein [--slidein-delay:400ms] opacity-0"><AnimatedGradientText class="my-1.5" :glow=true>overpriced</AnimatedGradientText></Headline>
+          <Headline class="animate-slidein [--slidein-delay:500ms] opacity-0">again.</Headline>
+        <PurpleYellowButton class="mt-10 animate-slidein [--slidein-delay:600ms] opacity-0" @click="navigateToUpload" :gradientVersion=1>
           Start now
         </PurpleYellowButton>
       </div>
