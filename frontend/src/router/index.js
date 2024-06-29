@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Upload from '../pages/Upload.vue';
 import Start from '../pages/Start.vue';
-import Result from '../pages/Results.vue';
+import Results from '../pages/Results.vue';
 
 
 const router = createRouter({
@@ -18,9 +18,9 @@ const router = createRouter({
             component: Upload
         },
         {
-            path: '/result',
-            name: 'Result',
-            component: Result
+            path: '/results',
+            name: 'Results',
+            component: Results
         }
     ]
 })
