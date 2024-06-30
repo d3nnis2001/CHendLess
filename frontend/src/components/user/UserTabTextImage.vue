@@ -5,8 +5,8 @@
         @keyup.enter="handleClick"
         :data-tab-target="tabTarget"
         role="button"
-        tabindex="0"
-    >
+        tabindex="0">
+        
         <svg class="h-10 w-10 flex-none fill-current" :viewBox="viewBox" xmlns="http://www.w3.org/2000/svg">
             <path :d="svgpath"/>
         </svg>
@@ -37,11 +37,17 @@ export default {
         active: {
             type: Boolean,
             default: false
+        },
+        logOut: {
+            type: Boolean,
+            default: false,
+            required: false
         }
     },
 
     computed: {
         activeClass() {
+            if (this.logOut) return 'hover:text-[#FF4E4E] text-[#fa2828] font-semibold';
             return this.active ? 'text-white-dark' : 'text-unselected-default hover:text-white-dark';
         }
     },
