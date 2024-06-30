@@ -38,8 +38,14 @@ module.exports = {
         background_rec: {
           dark: "#323232"
         },
+        background_rec2: {
+          dark: "#3c3c3c"
+        },
         background_konto: {
           dark: "#484848"
+        },
+        background_konto2: {
+          dark: "#585858"
         },
         green: {
           dark: "#24ff00"

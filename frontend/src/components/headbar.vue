@@ -5,7 +5,7 @@
       text-lg md:text-4xl lg:text-5xl h-12 md:h-24 lg:h-32 md:mx-4 lg:mx-8">
         <span class="self-center font-bold whitespace-nowrap">CHendLess</span>
         <div class="flex items-center order-2 space-x-2.5 md:space-x-5 lg:space-x-7">
-            <PurpleYellowButton v-if="profileInsteadOfButton===false" :gradientVersion=gradientVersion>
+            <PurpleYellowButton v-if="profileInsteadOfButton===false" :gradientVersion=gradientVersion  @click="navigateToSignIn">
               Sign in
             </PurpleYellowButton>
             <ProfileButton v-if="profileInsteadOfButton===true"></ProfileButton>
@@ -38,6 +38,11 @@ export default {
       type: Boolean,
       required: false,
       default: false
+    }
+  },
+  methods: {
+    navigateToSignIn() {
+      this.$router.push('/user/S1thK3nny');
     }
   }
 };

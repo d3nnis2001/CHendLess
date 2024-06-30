@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Upload from '../pages/Upload.vue';
 import Start from '../pages/Start.vue';
 import Results from '../pages/Results.vue';
+import User from '../pages/User.vue';
 
 
 const router = createRouter({
@@ -21,6 +22,10 @@ const router = createRouter({
             path: '/results',
             name: 'Results',
             component: Results
+        },
+        {
+            path: '/user/:id',
+            component: User
         }
     ]
 })

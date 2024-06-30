@@ -1,10 +1,10 @@
 <template>
   <div
     :class="[
-      'flex items-center flex-row box-border justify-between xl:px-24 p-3 sm:p-5 lg:p-10 border-2 my-7 md:my-10 lg:my-20 mx-7 md:mx-10 lg:mx-20 xl:mx-32 2xl:mx-40 rounded-3xl border-gray-400 h-72 md:h-80 lg:h-96',
+      'flex items-center flex-row box-border justify-between xl:px-24 p-3 sm:p-5 lg:p-10 border-2 my-7 md:my-10 lg:my-20 mx-7 md:mx-10 lg:mx-20 xl:mx-32 2xl:mx-40 rounded-3xl border-gray-400 h-72 md:h-80 lg:h-96 bg-background_rec-dark',
       { 'step-component': isVisible }
     ]"
-    :style="{ backgroundColor: '#323232', opacity: isVisible ? 1 : 0 }"
+    :style="{ opacity: isVisible ? 1 : 0 }"
     ref="stepComponent"
   >
     <div v-if="imageLeft">
