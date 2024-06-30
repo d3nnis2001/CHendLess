@@ -11,6 +11,7 @@
                     <UserComponent>
                         <div class="flex justify-center items-center h-full w-full">
                             <div class="flex flex-col items-center h-full w-full justify-center">
+
                                 <div class="mb-4 relative">
                                     <div class="absolute inset-0 hover:bg-black-dark hover:bg-opacity-20 rounded-full transition-all duration-200 ease-in"></div>
                                     <svg class="h-14 w-14 sm:h-24 sm:w-24 md:h-32 md:w-32 lg:h-44 lg:w-44 rounded-full flex-shrink-0 fill-slate-50" viewBox="0 0 38 37" xmlns="http://www.w3.org/2000/svg">
@@ -20,21 +21,20 @@
                                 <span class="text-center font-bold text-md sm:text-base md:text-xl lg:text-3xl xl:text-4xl 2xl:text-5xl">
                                     {{ $route.params.id }}
                                 </span>
+
                             </div>
                         </div>
                     </UserComponent>
 
                     <UserComponent class="h-full">
-                        <UserTab>
-
-                        </UserTab>
+                        <UserTab @tab-change="handleTabChange"></UserTab>
                     </UserComponent>
                     
                 </div>
                 <!-- 75% Column -->
                 <div class="h-full content-center py-4 sm:py-5 md:py-6 lg:py-7 xl:py-8 2xl:py-9">
                     <UserComponent class="grid mr-4 sm:mr-5 md:mr-6 lg:mr-7 xl:mr-8 2xl:mr-9 justify-center min-h-full">
-                        User {{ $route.params.id }}
+                        <component :is="currentTabComponent"></component>
                     </UserComponent>
                 </div>
 
@@ -45,12 +45,47 @@
 
 <script>
 import CustomHeadBar from "../components/headbar.vue";
-import UserComponent from "../components/UserComponent.vue";
-import UserTab from "../components/UserTab.vue";
+import UserComponent from "../components/user/UserComponent.vue";
+import UserTab from "../components/user/UserTab.vue";
+import TabHistory from "../components/user/tabs/TabHistory.vue";
+import TabPersonalInformation from "../components/user/tabs/TabPersonalInformation.vue";
+import TabStatistics from "../components/user/tabs/TabStatistics.vue";
+import TabSubscription from "../components/user/tabs/TabSubscription.vue";
+import TabAccount from "../components/user/tabs/TabAccount.vue";
 
 export default {
     name: 'User',
-    components: { CustomHeadBar, UserComponent, UserTab },
+    components: { CustomHeadBar, UserComponent, UserTab, TabPersonalInformation, TabHistory, TabStatistics, TabSubscription, TabAccount },
+    data() {
+        return {
+            currentTabComponent: 'TabPersonalInformation' // Initial default component
+        };
+    },
+    methods: {
+        handleTabChange(tabTarget) {
+            switch (tabTarget) {
+                case 'history':
+                    this.currentTabComponent = 'TabHistory';
+                    break;
+                case 'personal':
+                    this.currentTabComponent = 'TabPersonalInformation';
+                    break;
+                case 'statistics':
+                    this.currentTabComponent = 'TabStatistics';
+                    break;
+                case 'subscription':
+                    this.currentTabComponent = 'TabSubscription';
+                    break;
+                case 'account':
+                    this.currentTabComponent = 'TabAccount';
+                    break;
+                case 'none':
+                    this.currentTabComponent = this.currentTabComponent;
+                default:
+                    this.currentTabComponent = 'TabPersonalInformation';
+            }
+        }
+    }
 };
 </script>
 
