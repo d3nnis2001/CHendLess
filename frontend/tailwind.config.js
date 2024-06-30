@@ -52,6 +52,9 @@ module.exports = {
         },
         red: {
           dark: "#ff0000"
+        },
+        unselected: {
+          default: "#AFAFAF"
         }
       },
       fontFamily: {
