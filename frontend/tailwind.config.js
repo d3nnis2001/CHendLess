@@ -79,9 +79,18 @@ module.exports = {
             backgroundPosition: '100% 50%',
           },
         },
+        gradient_vbar: {
+          '0%': {
+            backgroundPosition: '50% 100%',
+          },
+          '100%': {
+            backgroundPosition: '50% 0%',
+          }
+        }
       },
       animation: {
         gradient: 'gradient 6s linear infinite',
+        gradient_vbar: 'gradient_vbar 6s linear infinite',
         slidein: 'slidein 1s ease var(--slidein-delay, 0) forwards'
       },
     },

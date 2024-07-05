@@ -36,6 +36,25 @@
         #ffc107,
         #ffb300,
         #f39c12);
+
+    --gradient-vbar: linear-gradient(
+        to bottom,
+        #ab47bc,
+        #ba68c8,
+        #ce93d8,
+        #ffc107,
+        #ffb300,
+        #f39c12,
+        #ffb300,
+        #ffc107,
+        #ce93d8,
+        #ba68c8,
+        #ab47bc,
+        #ba68c8,
+        #ce93d8,
+        #ffc107,
+        #ffb300,
+        #f39c12);
 }
 
 .gradient-text {
@@ -44,4 +63,9 @@
     background-image: var(--gradient-text);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+.gradient-vbar {
+    background-size: 300% 300%;
+    background-image: var(--gradient-vbar);
 }

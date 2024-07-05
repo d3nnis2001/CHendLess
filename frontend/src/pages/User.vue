@@ -4,7 +4,7 @@
         <div class="flex-grow flex items-center justify-center my-4 sm:my-8 md:my-12 xl:my-16 2xl:my-20">
             <div class="h-full items-center justify-center w-11/12 border-2 rounded-3xl border-gray-400
             bg-background_rec-dark bg-gradient-to-r from-background_rec2-dark to-background_rec-dark
-            grid grid-cols-[1fr_3fr] text-sm sm:text-base md:text-lg lg:text-2xl xl:text-3xl 2xl:text-4xl
+            grid grid-cols-[1fr_3fr] text-sm sm:text-base md:text-lg lg:text-2xl xl:text-3xl 2xl:text-4xl 
             gap-4 sm:gap-5 md:gap-6 lg:gap-7 xl:gap-8 2xl:gap-9">
                 <!-- 25% Column -->
                 <div class="h-full grid grid-rows-[1fr_2fr] gap-4 sm:gap-5 md:gap-6 lg:gap-7 xl:gap-8 2xl:gap-9">
@@ -33,8 +33,8 @@
                 </div>
                 <!-- 75% Column -->
                 <div class="h-full content-center py-4 sm:py-5 md:py-6 lg:py-7 xl:py-8 2xl:py-9">
-                    <UserComponent class="grid mr-4 sm:mr-5 md:mr-6 lg:mr-7 xl:mr-8 2xl:mr-9 justify-center min-h-full">
-                        <component :is="currentTabComponent"></component>
+                    <UserComponent class="grid mr-4 sm:mr-5 md:mr-6 lg:mr-7 xl:mr-8 2xl:mr-9 justify-center min-h-full ">
+                        <component :is="currentTabComponent" class="w-full animate-slidein [--slidein-delay:100ms] opacity-0 sm:py-2 md:py-6 lg:py-8 xl:py-10"></component>
                     </UserComponent>
                 </div>
 

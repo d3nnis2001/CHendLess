@@ -49,6 +49,9 @@ export default {
         activeClass() {
             if (this.logOut) return 'hover:text-[#FF4E4E] text-[#fa2828] font-semibold';
             return this.active ? 'text-white-dark' : 'text-unselected-default hover:text-white-dark';
+        },
+        showBar() {
+            return this.active && !this.logOut;
         }
     },
 
