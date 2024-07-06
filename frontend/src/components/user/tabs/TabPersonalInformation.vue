@@ -30,7 +30,7 @@
             <PurpleYellowButton class="rounded-xl">
                 Save
             </PurpleYellowButton>            
-            <button class="border-2 md:border-3 lg:border-4 rounded-xl bg-transparent relative text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium text-sm px-7 md:px-14 lg:px-20 py-2.5 text-center h-fit w-fit md:text-3xl">
+            <button class="border-2 md:border-3 lg:border-4 rounded-xl bg-background_konto2-dark relative text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium text-sm px-7 md:px-14 lg:px-20 py-2.5 text-center h-fit w-fit md:text-3xl">
                 Cancel
             </button>
         </div>
