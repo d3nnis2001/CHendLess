@@ -67,7 +67,7 @@ def handle_card(card, relative_xpath_sold, relative_xpath_name, relative_xpath_p
         WebDriverWait(card, 10).until(EC.presence_of_all_elements_located((By.XPATH, relative_xpath_image)))
         image = handle_image(card, relative_xpath_image)
     except Exception as e:
-        print(f"Fehler beim Extrahieren der Bild-URLs: {type(e).__name__}, {e}")
+        print(f"Fehler beim Extrahieren der Bild-URLs: {type(e).__name__}")
     
     # Save in the order that it's saved in the DB
     entry.append(name)
@@ -139,6 +139,7 @@ def main():
     relative_xpath_sold = './div/div/a/div[2]/div[2]/span'
     relative_xpath_name = './div/div/a/div[2]/div[1]'
     relative_xpath_image = './div/div/a/div[1]/img'
+    relative_xpath_image_alt = './div/div/a/div[1]/div[1]/div[1]/div/img'
     relative_xpath_price = './div/div/a/div[2]/div[3]/div[1]'
     relative_xpath_price_no_sold = './div/div/a/div[2]/div[2]/div[1]'
     relative_xpath_productlink = './div/div/a'
@@ -163,6 +164,15 @@ def main():
             if len(divs) == 0:
                 print("INFO: No elements found, last page")
                 break
+
+            # Unclean way to check if the xpath for the image is working, as it breaks with non-proper categories. TODO: Fix this
+            try:
+                WebDriverWait(divs[0], 10).until(EC.presence_of_all_elements_located((By.XPATH, relative_xpath_image)))
+                image = handle_image(divs[0], relative_xpath_image)
+            except Exception as e:
+                print("Keine richtige Kategorie. WECHSLE den relativen Pfad!")
+                relative_xpath_image = relative_xpath_image_alt
+
             for i, div in enumerate(divs, start=1):
                 entries.append(handle_card(card = div, relative_xpath_sold = relative_xpath_sold, relative_xpath_price_no_sold = relative_xpath_price_no_sold, relative_xpath_name = relative_xpath_name, relative_xpath_price = relative_xpath_price, relative_xpath_image = relative_xpath_image, relative_xpath_productlink = relative_xpath_productlink))
                 # print(f'Div {i}: ', entries[i-1])

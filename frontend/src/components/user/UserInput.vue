@@ -74,7 +74,7 @@
             #ffb300,
             #f39c12);
         border-radius: inherit;
-        animation: rotation 10s linear infinite;
+        animation: rotation 15s linear infinite;
     }
 
     .card::after {
