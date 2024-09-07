@@ -1,7 +1,7 @@
 <template>
     <div class="text-left group">
         <span class="ml-2 sm:ml-3 md:ml-4 lg:ml-5 xl:ml-7 2xl:ml-8">
-            <slot name="placeholder">{{ placeholder }}</slot>
+            <slot name="info">{{ info }}</slot>
         </span>
 
         <div class="relative rounded-xl">
@@ -11,24 +11,39 @@
                 h-10 sm:h-14 md:h-16 lg:h-20 xl:h-24
                 px-2 sm:px-3 md:px-4 xl:px-6 2xl:px-7
                 focus:ring-0 focus:outline-none focus:border-transparent transition-all duration-100 ease-linear" 
-                required :placeholder="placeholder" :type="type">
+                required :placeholder="computedPlaceholder" :type="type" v-model="inputValue">
         </div>
     </div>
 </template>
 
+<!-- Use the default info incase the placeholder is the same as the info -->
 <script>
     export default {
-        name: 'UserInput',
-        props: {
-            placeholder: {
-                type: String,
-                required: true
-            },
-            type: {
-                type: String,
-                default: 'text'
-            }
+    name: 'UserInput',
+    props: {
+        info: {
+            type: String,
+            required: true
+        },
+        placeholder: {
+            type: String,
+            default: null
+        },
+        type: {
+            type: String,
+            default: 'text'
         }
+    },
+    data() {
+        return {
+            inputValue: ''
+        }
+    },
+    computed: {
+        computedPlaceholder() {
+            return this.placeholder || this.info;
+        }
+    }
     }
 </script>
 

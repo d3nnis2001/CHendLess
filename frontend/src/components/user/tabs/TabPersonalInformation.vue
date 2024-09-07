@@ -12,17 +12,17 @@
         </div>
 
         <div class="content-center w-full h-full grid grid-rows-2 lg:grid-rows-none lg:grid-cols-2 gap-2 md:gap-4 lg:gap-6">
-            <UserInput placeholder="First Name"/>
-            <UserInput placeholder="Last Name"/>
+            <UserInput info="First Name" placeholder="Max"/>
+            <UserInput info="Last Name" placeholder="Mustermann"/>
         </div>
 
         <div>
-            <UserInput placeholder="Email" type="email"/>
+            <UserInput info="Email" placeholder="max.mustermann@example.com" type="email"/>
         </div>
 
         <div class="content-center w-full h-full grid grid-rows-2 lg:grid-rows-none lg:grid-cols-2 gap-2 md:gap-4 lg:gap-6">
-            <UserInput placeholder="Telephone" type="tel"/>
-            <UserInput placeholder="Birthday" type="date"/>
+            <UserInput info="Telephone" placeholder="+49 1590 6741594" type="tel"/>
+            <UserInput info="Birthday" type="date"/>
         </div>
 
         <div class="w-full h-full flex flex-row gap-2 md:gap-4 lg:gap-6">

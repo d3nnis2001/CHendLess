@@ -3,7 +3,9 @@
     <nav class="bg-transparent px-4 lg:px-6 py-2.5">
       <div class="flex flex-wrap justify-between items-center content-center
       text-lg md:text-4xl lg:text-5xl h-12 md:h-24 lg:h-32 md:mx-4 lg:mx-8">
-        <span class="self-center font-bold whitespace-nowrap">CHendLess</span>
+        <RouterLink to="/" class="self-center font-bold whitespace-nowrap">
+          <span>CHendLess</span>
+        </RouterLink>
         <div class="flex items-center order-2 space-x-2.5 md:space-x-5 lg:space-x-7">
             <PurpleYellowButton v-if="profileInsteadOfButton===false" :gradientVersion=gradientVersion  @click="navigateToSignIn">
               Sign in
