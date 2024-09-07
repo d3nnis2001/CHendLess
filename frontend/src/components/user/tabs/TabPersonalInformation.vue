@@ -1,5 +1,4 @@
-<!-- TODO: Find out why this tab increases the h-size of the parent component, add button functionality (and outlines) and proper tel number shit -->
-
+<!-- TODO: Add button functionality (and outlines) and proper tel number shit -->
 
 <template>
     <div class="w-full h-full content-stretch text-center 
