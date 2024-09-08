@@ -62,7 +62,7 @@ export default {
   components: {PurpleYellowButton, CustomHeadBar, StepComponent, Headline, AnimatedGradientText, GetStartedNow, Impressum},
   methods: {
     navigateToUpload() {
-      this.$router.push('/upload');
+      this.$router.push('/login');
     }
   }
 }
