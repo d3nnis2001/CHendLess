@@ -5,7 +5,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/d3nnis2001/CHendLess">
-    <img src="images/animation.gif" alt="Animation" width="300">
+    <img src="images/hero.gif" alt="Animation" width="300">
   </a>
 
 <h3 align="center">CHendLess - Buy More, Pay Less</h3>
