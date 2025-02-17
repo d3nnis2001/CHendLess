@@ -48,10 +48,10 @@ export default {
     return {
       items: ["Picture", "Name", "Price", "Saved Money (€)", "Saved Money (%)", "Shop", "Link"],
       productList: [
-        ["https://de.aliexpress.com/", "Aliexpress", "25%", "25€", "100€", "Dildo (Black)", "../../src/assets/productImage.png"],
-        ["https://de.aliexpress.com/", "Aliexpress", "25%", "25€", "100€", "Dildo (Black)", "../../src/assets/productImage.png"],
-        ["https://de.aliexpress.com/", "Aliexpress", "25%", "25€", "100€", "Dildo (Black)", "../../src/assets/productImage.png"],
-        ["https://de.aliexpress.com/", "Aliexpress", "25%", "25€", "100€", "Dildo (Black)", "../../src/assets/productImage.png"]
+        ["https://de.aliexpress.com/", "Aliexpress", "25%", "25€", "100€", "Item 1", "../../src/assets/productImage.png"],
+        ["https://de.aliexpress.com/", "Aliexpress", "25%", "25€", "100€", "Item 2", "../../src/assets/productImage.png"],
+        ["https://de.aliexpress.com/", "Aliexpress", "25%", "25€", "100€", "Item 3", "../../src/assets/productImage.png"],
+        ["https://de.aliexpress.com/", "Aliexpress", "25%", "25€", "100€", "Item 4", "../../src/assets/productImage.png"]
       ]
     };
   }

@@ -16,7 +16,6 @@
             <strong>Drag and Drop to upload</strong> <br> or
           </p>
           <BrowseButton @file-selected="handleFile"></BrowseButton>
-          <!-- Display selected file name if available -->
           <p v-if="uploadedFileName" class="mt-2 text-center">{{ uploadedFileName }}</p>
         </div>
         <div class="flex flex-col text-center ml-0 lg:ml-10 mt-10 lg:mt-0">
